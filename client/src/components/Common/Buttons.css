@@ -1,0 +1,58 @@
+.btn{
+
+    padding:14px 28px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.primary{
+
+    background:#2563EB;
+
+    color:white;
+
+}
+
+.primary:hover{
+
+    background:#1D4ED8;
+
+}
+
+.secondary{
+
+    background:white;
+
+    border:2px solid #2563EB;
+
+    color:#2563EB;
+
+}
+
+.secondary:hover{
+
+    background:#EFF6FF;
+
+}
+@media(max-width:768px){
+
+.hero-buttons{
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+}
