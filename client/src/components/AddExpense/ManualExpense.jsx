@@ -1,20 +1,12 @@
 import { useState } from "react";
-
-import {
-  IndianRupee,
-  Calendar,
-  Wallet,
-  Tag,
-  FileText,
-  Upload,
-} from "lucide-react";
-
+import { addExpense } from "../../api/expenseApi";
+import { toast } from "react-toastify";
 const ManualExpense = () => {
   const [expense, setExpense] = useState({
     title: "",
     amount: "",
     category: "",
-    payment: "",
+    paymentMethod: "",
     date: "",
     notes: "",
   });
@@ -26,118 +18,107 @@ const ManualExpense = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.log(expense);
+  try {
+    const token = localStorage.getItem("token");
 
-    alert("Expense Saved Successfully!");
-  };
+    await addExpense(expense, token);
+
+    toast.success("Expense Added Successfully!");
+
+    setExpense({
+      title: "",
+      amount: "",
+      category: "",
+      paymentMethod: "",
+      date: "",
+      notes: "",
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    toast.error("Failed to Add Expense");
+  }
+};
 
   return (
     <div className="expense-card">
 
-      <h2 className="details ">Expense Details</h2>
-
       <form onSubmit={handleSubmit}>
 
-        <div className="form-group">
-
-          <input
-            type="text"
-            name="title"
-            placeholder="Expense Title "
-            value={expense.title}
-            onChange={handleChange}
-          />
-
-        </div>
+        {/* Row 1 */}
 
         <div className="form-row">
 
           <div className="form-group">
 
-            <label>
-              <IndianRupee size={16} />
-              Amount
-            </label>
+            <label>Title</label>
+
+            <input
+              type="text"
+              name="title"
+              placeholder="Enter expense title"
+              value={expense.title}
+              onChange={handleChange}
+            />
+
+          </div>
+
+          <div className="form-group">
+
+            <label>Amount</label>
 
             <input
               type="number"
               name="amount"
-              placeholder="₹0"
+              placeholder="₹ Enter amount"
               value={expense.amount}
               onChange={handleChange}
             />
 
           </div>
 
-          <div className="form-group">
-
-            <label>
-              <Calendar size={16} />
-              Date
-            </label>
-
-            <input
-              type="date"
-              name="date"
-              value={expense.date}
-              onChange={handleChange}
-            />
-
-          </div>
-
         </div>
+
+        {/* Row 2 */}
 
         <div className="form-row">
 
           <div className="form-group">
 
-            <label>
-              <Tag size={16} />
-              Category
-            </label>
+            <label>Category</label>
 
             <select
-  className={expense.category ? "selected" : ""}
-  name="category"
-  value={expense.category}
-  onChange={handleChange}
->
-  <option value="">Select</option>
+              name="category"
+              value={expense.category}
+              onChange={handleChange}
+            >
+              <option value="">Select category</option>
+              <option>Food</option>
+              <option>Transport</option>
+              <option>Shopping</option>
+              <option>Bills</option>
+              <option>Education</option>
+              <option>Entertainment</option>
+              <option>Health</option>
+              <option>Others</option>
+            </select>
 
-  <option value="Food">Food</option>
-
-  <option value="Transport">Transport</option>
-
-  <option value="Shopping">Shopping</option>
-
-  <option value="Bills">Bills</option>
-
-  <option value="Education">Education</option>
-
-  <option value="Entertainment">Entertainment</option>
-
-  <option value="Health">Health</option>
-
-  <option value="Others">Others</option>
-</select>
           </div>
 
           <div className="form-group">
 
-            <label>
-              <Wallet size={16} />
-              Payment Method
-            </label>
+            <label>Payment Method</label>
 
             <select
-              name="payment"
+              name="paymentMethod"
               value={expense.payment}
               onChange={handleChange}
             >
-              <option value="">Select</option>
+              <option value="">Select payment method</option>
               <option>Cash</option>
               <option>UPI</option>
               <option>Credit Card</option>
@@ -149,48 +130,55 @@ const ManualExpense = () => {
 
         </div>
 
-        <div className="form-group">
+        {/* Row 3 */}
 
-          <label>
-            <Upload size={16} />
-            Upload Receipt
-          </label>
+        <div className="form-row">
 
-          <input type="file" />
+          <div className="form-group">
+
+            <label>Date</label>
+
+            <input
+              type="date"
+              name="date"
+              value={expense.date}
+              onChange={handleChange}
+            />
+
+          </div>
+
+          <div className="form-group">
+
+            <label>Notes (Optional)</label>
+
+            <input
+              type="text"
+              name="notes"
+              placeholder="Add notes"
+              value={expense.notes}
+              onChange={handleChange}
+            />
+
+          </div>
 
         </div>
 
-        <div className="form-group">
-
-          <label>
-            <FileText size={14} />
-            Notes
-          </label>
-
-          <textarea
-            rows="5"
-            name="notes"
-            placeholder="Write something..."
-            value={expense.notes}
-            onChange={handleChange}
-          />
-
-        </div>
+        {/* Buttons */}
 
         <div className="form-buttons">
-
-          <button
-            type="button"
-            className="cancel-btn"
-          >
-            Cancel
-          </button>
 
           <button
             type="submit"
             className="save-btn"
           >
             Save Expense
+          </button>
+
+          <button
+            type="button"
+            className="cancel-btn"
+          >
+            Cancel
           </button>
 
         </div>

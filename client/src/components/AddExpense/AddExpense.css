@@ -1,10 +1,12 @@
+
 /* ==================================
    PAGE
 ================================== */
 
-.expense-page{
-  padding:30px;
+.expense-page {
+  padding: 30px;
 }
+
 .expense-header {
   margin-bottom: 25px;
 }
@@ -28,26 +30,26 @@
 .expense-tabs {
   display: flex;
   gap: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .expense-tabs button {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 
+  padding: 12px 22px;
+
   border: none;
-  cursor: pointer;
-
-  padding: 12px 20px;
-
   border-radius: 12px;
 
   background: white;
 
   font-weight: 600;
+  cursor: pointer;
 
-  transition: 0.3s;
+  transition: .25s;
 }
 
 .expense-tabs button:hover {
@@ -63,81 +65,63 @@
    LAYOUT
 ================================== */
 
-.expense-layout{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:24px;
-    align-items:start;
+.expense-layout {
+  width: 100%;
 }
 
-.expense-right{
-    align-self:start;
+.expense-card {
+  width: 100%;
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 18px rgba(0,0,0,.05);
 }
 
-.preview-card{
-    background:white;
-    border-radius:20px;
-    padding:30px;
-    border:1px solid #e5e7eb;
-    box-shadow:0 4px 20px rgba(0,0,0,.05);
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-
-    min-height:500px;
-}
 /* ==================================
    FORM
 ================================== */
 
-.form-group {
-  display: flex;
-  flex-direction: column;
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 22px;
   margin-bottom: 20px;
 }
 
-.form-group label {
+.form-group {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+}
 
-  margin-bottom: 8px;
-
+.form-group label {
   font-weight: 600;
-
   color: #374151;
+  margin-bottom: 8px;
 }
 
 .form-group input,
-.form-group select,
-.form-group textarea {
-  padding: 14px;
+.form-group select {
+  height: 52px;
+  padding: 0 16px;
 
   border: 1px solid #d1d5db;
-
   border-radius: 12px;
+
+  font-size: 15px;
 
   outline: none;
 
-  font-size: 14px;
+  transition: .25s;
 }
 
 .form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.form-group select:focus {
   border-color: #2563eb;
 }
-select:hover{
-    background-color:#bdd0ea;
-}
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+.form-group select:hover {
+  background: #f8fafc;
 }
 
 /* ==================================
@@ -148,56 +132,46 @@ select:hover{
   display: flex;
   justify-content: flex-end;
   gap: 15px;
-  margin-top: 25px;
+  margin-top: 35px;
+}
+
+.save-btn {
+  width: 180px;
+  height: 48px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: white;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: .25s;
+}
+
+.save-btn:hover {
+  background: #1d4ed8;
 }
 
 .cancel-btn {
+  width: 130px;
+  height: 48px;
+
   border: none;
-
-  padding: 12px 22px;
-
   border-radius: 10px;
 
   background: #e5e7eb;
 
+  font-weight: 600;
   cursor: pointer;
 
-  font-weight: 600;
+  transition: .25s;
 }
 
-.save-btn {
-  border: none;
-
-  padding: 12px 22px;
-
-  border-radius: 10px;
-
-  background: #2563eb;
-
-  color: white;
-
-  cursor: pointer;
-
-  font-weight: 600;
-}
-
-/* ==================================
-   PREVIEW
-================================== */
-
-.preview-card {
-  text-align: center;
-}
-
-.preview-image {
-  width: 100%;
-  max-width: 260px;
-  margin-bottom: 20px;
-}
-
-.preview-card p {
-  color: #6b7280;
-  line-height: 1.7;
+.cancel-btn:hover {
+  background: #d1d5db;
 }
 
 /* ==================================
@@ -212,16 +186,15 @@ select:hover{
   width: 120px;
   height: 120px;
 
-  margin: 20px auto;
-
-  border-radius: 50%;
+  margin: 25px auto;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background: #dbeafe;
+  border-radius: 50%;
 
+  background: #dbeafe;
   color: #2563eb;
 }
 
@@ -230,15 +203,13 @@ select:hover{
   align-items: center;
   gap: 8px;
 
-  border: none;
-
-  background: #2563eb;
-
-  color: white;
-
   padding: 12px 22px;
 
+  border: none;
   border-radius: 12px;
+
+  background: #2563eb;
+  color: white;
 
   cursor: pointer;
 
@@ -247,9 +218,10 @@ select:hover{
 
 .voice-container textarea {
   width: 100%;
+  padding: 15px;
+
   border-radius: 12px;
   border: 1px solid #d1d5db;
-  padding: 14px;
 }
 
 /* ==================================
@@ -263,31 +235,25 @@ select:hover{
 
 .quick-textarea {
   width: 100%;
+  padding: 15px;
 
   border: 1px solid #d1d5db;
-
   border-radius: 12px;
-
-  padding: 14px;
 
   margin-bottom: 20px;
 }
 
 .analyze-btn {
   width: 100%;
-
-  border: none;
-
   padding: 14px;
 
+  border: none;
   border-radius: 12px;
 
   background: #2563eb;
-
   color: white;
 
   font-weight: 600;
-
   cursor: pointer;
 
   margin-bottom: 25px;
@@ -324,29 +290,14 @@ select:hover{
    RESPONSIVE
 ================================== */
 
-@media (max-width: 1000px) {
-  .expense-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .preview-card {
-    order: -1;
-  }
-}
-
 @media (max-width: 768px) {
-  .expense-page {
-  padding: 30px;
-  min-height: auto;
-  height: auto;
-}
-
-  .form-row {
-    grid-template-columns: 1fr;
-  }
 
   .expense-tabs {
     flex-direction: column;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
   }
 
   .form-buttons {
@@ -357,16 +308,5 @@ select:hover{
   .cancel-btn {
     width: 100%;
   }
-}
-.expense-card{
-  height:auto !important;
-  min-height:auto !important;
-}
-.expense-layout {
-  align-items: start;
-}
 
-.expense-left,
-.expense-right {
-  height: fit-content;
 }
