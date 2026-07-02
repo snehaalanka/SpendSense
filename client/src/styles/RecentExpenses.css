@@ -1,0 +1,161 @@
+.recent-card{
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:24px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.recent-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.recent-header h3{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:var(--text-primary);
+
+}
+
+.recent-header button{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    border:none;
+
+    background:none;
+
+    color:#2563EB;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+.recent-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.expense-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.expense-row:last-child{
+
+    border-bottom:none;
+
+}
+
+.expense-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.expense-icon{
+
+    width:44px;
+
+    height:44px;
+
+    border-radius:12px;
+
+    background:#F3F6FF;
+
+    color:#2563EB;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.expense-left h4{
+
+    font-size:17px;
+
+    color:var(--text-primary);
+
+    font-weight:600;
+
+}
+
+.expense-left p{
+
+    margin-top:3px;
+
+    font-size:14px;
+
+    color:var(--text-secondary);
+
+}
+
+.expense-right{
+
+    text-align:right;
+
+}
+
+.expense-right h4{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    color:var(--text-primary);
+
+}
+
+.expense-right p{
+
+    margin-top:4px;
+
+    color:var(--text-secondary);
+
+    font-size:14px;
+
+}

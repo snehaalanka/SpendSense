@@ -10,17 +10,26 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
 
-      <Topbar />
+      <div className="dashboard-top">
 
-      <SummaryCards />
+        <Topbar />
 
-      <div className="dashboard-middle">
-        <Charts />
+        <SummaryCards />
+
       </div>
 
-      <div className="dashboard-bottom">
+      <div className="charts-section">
+
+        <Charts />
+
+      </div>
+
+      <div className="bottom-grid">
+
         <RecentExpenses />
+
         <InsightCard />
+
       </div>
 
     </div>

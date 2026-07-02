@@ -6,10 +6,49 @@ import {
   MessageCircle,
   Settings,
   LogOut,
+  User,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
 import "../../styles/Sidebar.css";
+
+const menuItems = [
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: <LayoutDashboard size={20} />,
+  },
+  {
+    path: "/add-expense",
+    name: "Add Expense",
+    icon: <Receipt size={20} />,
+  },
+  {
+    path: "/expenses",
+    name: "Expense History",
+    icon: <Receipt size={20} />,
+  },
+  {
+    path: "/analysis",
+    name: "AI Analysis",
+    icon: <Bot size={20} />,
+  },
+  {
+    path: "/goals",
+    name: "Goals",
+    icon: <Target size={20} />,
+  },
+  {
+    path: "/ask-ai",
+    name: "Ask AI",
+    icon: <MessageCircle size={20} />,
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    icon: <Settings size={20} />,
+  },
+];
 
 const Sidebar = () => {
   return (
@@ -19,9 +58,15 @@ const Sidebar = () => {
 
       <div className="sidebar-logo">
 
-        <div className="logo-box">💰</div>
+        <div className="logo-icon">💰</div>
 
-        <h2>SpendSense</h2>
+        <div>
+
+          <h2>SpendSense</h2>
+
+          <p>AI Finance</p>
+
+        </div>
 
       </div>
 
@@ -29,50 +74,49 @@ const Sidebar = () => {
 
       <nav className="sidebar-nav">
 
-        <NavLink to="/dashboard">
-          <LayoutDashboard size={20} />
-          <span>Dashboard</span>
-        </NavLink>
+        {menuItems.map((item) => (
 
-        <NavLink to="/add-expense">
-          <Receipt size={20} />
-          <span>Add Expense</span>
-        </NavLink>
+          <NavLink
+            key={item.path}
+            to={item.path}
+          >
+            {item.icon}
 
-        <NavLink to="/expenses">
-          <Receipt size={20} />
-          <span>Expense History</span>
-        </NavLink>
+            <span>{item.name}</span>
 
-        <NavLink to="/analysis">
-          <Bot size={20} />
-          <span>AI Analysis</span>
-        </NavLink>
+          </NavLink>
 
-        <NavLink to="/goals">
-          <Target size={20} />
-          <span>Goals</span>
-        </NavLink>
-
-        <NavLink to="/ask-ai">
-          <MessageCircle size={20} />
-          <span>Ask AI</span>
-        </NavLink>
-
-        <NavLink to="/settings">
-          <Settings size={20} />
-          <span>Settings</span>
-        </NavLink>
+        ))}
 
       </nav>
+
+      {/* User */}
+
+      <div className="sidebar-user">
+
+        <div className="user-avatar">
+
+          <User size={20} />
+
+        </div>
+
+        <div>
+
+          <h4>Sneha</h4>
+
+          <p>sneha@email.com</p>
+
+        </div>
+
+      </div>
 
       {/* Logout */}
 
       <button className="logout-btn">
 
-        <LogOut size={20} />
+        <LogOut size={18} />
 
-        <span>Logout</span>
+        Logout
 
       </button>
 

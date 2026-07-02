@@ -1,0 +1,74 @@
+:root{
+
+/* Brand */
+
+--primary:#2563EB;
+--primary-hover:#1D4ED8;
+
+/* Background */
+
+--background:#F5F7FB;
+
+/* Sidebar */
+
+--sidebar:#FFFFFF;
+
+/* Cards */
+
+--card:#FFFFFF;
+
+/* Text */
+
+--text-primary:#111827;
+
+--text-secondary:#64748B;
+
+/* Border */
+
+--border:#E5E7EB;
+
+/* Shadows */
+
+--shadow:
+
+0 8px 30px rgba(0,0,0,.06);
+
+--shadow-hover:
+
+0 18px 45px rgba(0,0,0,.12);
+
+/* Radius */
+
+--radius-sm:12px;
+
+--radius-md:16px;
+
+--radius-lg:20px;
+
+}
+
+/* ================= DARK ================= */
+
+[data-theme="dark"]{
+
+--background:#0F172A;
+
+--sidebar:#111827;
+
+--card:#1E293B;
+
+--text-primary:#F8FAFC;
+
+--text-secondary:#94A3B8;
+
+--border:#334155;
+
+--shadow:
+
+0 10px 35px rgba(0,0,0,.35);
+
+--shadow-hover:
+
+0 20px 50px rgba(0,0,0,.5);
+
+}

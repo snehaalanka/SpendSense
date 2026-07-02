@@ -1,0 +1,260 @@
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* ========================= */
+
+.chart-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    box-shadow: var(--shadow);
+
+    transition: .3s;
+}
+
+.chart-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: var(--shadow-hover);
+}
+
+/* ========================= */
+
+.chart-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+.chart-header h3 {
+    font-size: 20px;
+
+    color: var(--text-primary);
+}
+
+.chart-header span {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+/* ========================= */
+/* Expense Categories */
+/* ========================= */
+
+.chart-body {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 45px;
+
+    min-height: 260px;
+
+}
+
+.pie-chart {
+
+    width: 190px;
+
+    height: 190px;
+
+    border-radius: 50%;
+
+    background: conic-gradient(
+        #2563EB 0 36%,
+        #10B981 36% 58%,
+        #F59E0B 58% 76%,
+        #EF4444 76% 90%,
+        #8B5CF6 90% 100%
+    );
+
+    position: relative;
+
+    flex-shrink: 0;
+}
+
+.pie-chart::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 95px;
+
+    height: 95px;
+
+    border-radius: 50%;
+
+    background: var(--card);
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.category-list {
+
+    width: 190px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 18px;
+
+}
+
+.category-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: var(--text-primary);
+
+    font-size: 15px;
+}
+
+.category-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.category-item strong {
+
+    width: 40px;
+
+    text-align: right;
+
+    font-weight: 700;
+}
+
+.color-dot {
+
+    width: 12px;
+
+    height: 12px;
+
+    border-radius: 50%;
+}
+
+/* ========================= */
+/* Weekly Spending */
+/* ========================= */
+
+.bars {
+
+    height: 240px;
+
+    display: flex;
+
+    justify-content: space-evenly;
+
+    align-items: flex-end;
+
+    padding: 5px 10px 0;
+}
+
+.bar-item {
+
+    width: 42px;
+
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    align-items: center;
+}
+
+.bar {
+
+    width: 30px;
+
+    min-height: 30px;
+
+    border-radius: 14px 14px 0 0;
+
+    background: linear-gradient(
+        to top,
+        #2563EB,
+        #60A5FA
+    );
+
+    transition: .25s;
+}
+
+.bar:hover {
+
+    transform: scaleY(1.05);
+}
+
+.bar-item small {
+
+    margin-top: 10px;
+
+    font-size: 12px;
+
+    color: var(--text-secondary);
+}
+
+/* ========================= */
+
+@media(max-width:1100px){
+
+    .charts-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:700px){
+
+    .chart-body{
+
+        flex-direction:column;
+
+        gap:30px;
+
+        min-height:auto;
+
+    }
+
+    .category-list{
+
+        width:100%;
+
+    }
+
+}
