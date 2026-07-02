@@ -1,57 +1,126 @@
 import { useState } from "react";
+import {
+  Sparkles,
+  Pizza,
+  IndianRupee,
+  UtensilsCrossed,
+  CreditCard,
+} from "lucide-react";
 
 const QuickExpense = () => {
-  const [text, setText] = useState("");
+
+  const [text,setText] = useState("");
 
   return (
+
     <div className="expense-card">
 
-      <h2>Quick Text Analysis</h2>
+      <div className="quick-header">
 
-      <p className="quick-text-description">
-        Type your expense naturally and let AI extract the details.
-      </p>
+        <h2>Quick Text Analysis</h2>
+
+        <p>
+          Describe your expense naturally and let AI extract the details.
+        </p>
+
+      </div>
 
       <textarea
+
         className="quick-textarea"
-        rows="7"
-        placeholder="Example: Bought pizza for ₹350 using UPI."
+
+        placeholder="Example: Bought Pizza for ₹350 using UPI yesterday evening."
+
         value={text}
-        onChange={(e) => setText(e.target.value)}
+
+        onChange={(e)=>setText(e.target.value)}
+
       />
 
       <button className="analyze-btn">
-        Analyze with AI
+
+        <Sparkles size={18}/>
+
+        Analyze Expense
+
       </button>
 
       <div className="ai-result">
 
-        <h3>Extracted Details</h3>
+        <div className="ai-title">
 
-        <div className="result-item">
-          <span>Expense</span>
-          <strong>Pizza</strong>
+          <Sparkles size={18}/>
+
+          <span>AI Extracted Details</span>
+
         </div>
 
-        <div className="result-item">
-          <span>Amount</span>
-          <strong>₹350</strong>
-        </div>
+        <div className="result-grid">
 
-        <div className="result-item">
-          <span>Category</span>
-          <strong>Food</strong>
-        </div>
+          <div className="result-card">
 
-        <div className="result-item">
-          <span>Payment</span>
-          <strong>UPI</strong>
+            <Pizza size={18}/>
+
+            <div>
+
+              <small>Expense</small>
+
+              <h4>Pizza</h4>
+
+            </div>
+
+          </div>
+
+          <div className="result-card">
+
+            <IndianRupee size={18}/>
+
+            <div>
+
+              <small>Amount</small>
+
+              <h4>₹350</h4>
+
+            </div>
+
+          </div>
+
+          <div className="result-card">
+
+            <UtensilsCrossed size={18}/>
+
+            <div>
+
+              <small>Category</small>
+
+              <h4>Food</h4>
+
+            </div>
+
+          </div>
+
+          <div className="result-card">
+
+            <CreditCard size={18}/>
+
+            <div>
+
+              <small>Payment</small>
+
+              <h4>UPI</h4>
+
+            </div>
+
+          </div>
+
         </div>
 
       </div>
 
     </div>
+
   );
+
 };
 
 export default QuickExpense;
