@@ -1,74 +1,132 @@
-.navbar{
+/* =====================================================
+   NAVBAR
+===================================================== */
 
-    width:100%;
-    background:white;
-    border-bottom:1px solid #e5e7eb;
-    position:sticky;
-    top:0;
-    z-index:100;
-
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px); /* Safari support */
+    background: rgba(255, 255, 255, 0.75);
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.navbar-container{
-
-    width:90%;
-    max-width:1300px;
-
-    margin:auto;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    height:80px;
-
+[data-theme="dark"] .navbar {
+    background: rgba(15, 23, 42, 0.75);
 }
 
-.logo{
+/* ===================================================== */
 
-    font-size:30px;
 
-    font-weight:700;
-
-    color:#2563EB;
-
+.navbar-container {
+    width: 95%; /* Updated to match Hero */
+    max-width: 1400px; /* Updated to match Hero */
+    height: 72px; 
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.nav-links{
 
-    display:flex;
 
-    align-items:center;
+/* ===================================================== */
 
-    gap:40px;
-
+.logo {
+    text-decoration: none !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #2563EB !important;
+    letter-spacing: -0.5px !important;
+    
+    /* BULLETPROOF ALIGNMENT FIX */
+    display: flex !important;
+    align-items: center !important;
+    align-self: center ; /* Forces vertical centering within the navbar */
+    height: max-content !important; 
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
 }
 
-.nav-links a{
+/* ===================================================== */
 
-    text-decoration:none;
-
-    color:#374151;
-
-    font-weight:500;
-
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
 }
 
-.nav-links a:hover{
-
-    color:#2563EB;
-
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 15px; 
+    font-weight: 500;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
 }
-@media (max-width: 768px) {
 
-  .nav-links {
-    display: none;
-  }
+.nav-links a:hover {
+    color: #2563EB;
+}
 
-  .menu-icon {
-    display: block;
-  }
+/* ===================================================== */
 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ===================================================== */
+
+.login-link {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: 15px; 
+    font-weight: 600;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.login-link:hover {
+    color: #2563EB;
+}
+
+/* ===================================================== */
+
+.theme-btn {
+    width: 40px; 
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-btn:hover {
+    border-color: #2563EB;
+    color: #2563EB;
+    transform: translateY(-1px);
+}
+
+/* ===================================================== */
+
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
+    .nav-actions {
+        gap: 12px;
+    }
 }

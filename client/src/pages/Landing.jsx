@@ -2,18 +2,28 @@ import Navbar from "../components/Navbar/Navbar";
 import Hero from "../components/Hero/Hero";
 import Features from "../components/Features/Features";
 
+import "./Landing.css";
+
 const Landing = () => {
+
   return (
-    <div className="min-h-screen bg-gray-50">
+
+    <div className="landing-page">
 
       <Navbar />
 
-      <Hero />
+      <main>
 
-      <Features />
+        <Hero />
+
+        <Features />
+
+      </main>
 
     </div>
+
   );
+
 };
 
 export default Landing;

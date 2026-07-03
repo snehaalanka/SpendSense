@@ -1,33 +1,47 @@
 import "./FeatureCard.css";
 
-const FeatureCard = ({ icon, title, description }) => {
+import { ArrowRight } from "lucide-react";
 
-return(
+const FeatureCard = ({
+  icon,
+  title,
+  description,
+}) => {
 
-<div className="feature-card">
+  return (
 
-<div className="feature-icon">
+    <div className="feature-card">
 
-{icon}
+      <div className="feature-icon">
 
-</div>
+        {icon}
 
-<h3>
+      </div>
 
-{title}
+      <h3>
 
-</h3>
+        {title}
 
-<p>
+      </h3>
 
-{description}
+      <p>
 
-</p>
+        {description}
 
-</div>
+      </p>
 
-)
+      <button className="feature-link">
 
-}
+        Learn More
+
+        <ArrowRight size={18}/>
+
+      </button>
+
+    </div>
+
+  );
+
+};
 
 export default FeatureCard;

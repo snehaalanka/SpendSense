@@ -1,48 +1,86 @@
-.features{
+/* =====================================================
+   FEATURES SECTION
+===================================================== */
 
-    width:90%;
-
-    max-width:1300px;
-
-    margin:100px auto;
-
+.features {
+    width: 95%; /* Updated to match Navbar/Hero */
+    max-width: 1400px; /* Updated to match Navbar/Hero */
+    margin: 60px auto 100px; /* Slashed the 120px top margin to 60px */
 }
 
-.features h2{
+/* =====================================================
+   SECTION HEADER
+===================================================== */
 
-    text-align:center;
-
-    font-size:42px;
-
+.section-header {
+    text-align: center;
+    max-width: 720px;
+    margin: auto;
 }
 
-.features-subtitle{
-
-    text-align:center;
-
-    margin-top:15px;
-
-    color:#64748B;
-
+.section-tag {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(37, 99, 235, 0.10);
+    color: #2563EB;
+    border-radius: 999px;
+    font-size: 14px; /* Explicitly set to match Hero tag */
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 
-.feature-grid{
-
-    margin-top:60px;
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    gap:30px;
-
+.features h2 {
+    font-size: 46px;
+    line-height: 1.2; /* Tighter line-height for a sleeker look */
+    color: var(--text-primary);
+    margin-bottom: 18px;
+    letter-spacing: -0.5px; /* Adds a modern, polished feel to large text */
 }
-@media (max-width:768px){
 
-    .feature-grid{
+.features h2 span {
+    color: #2563EB;
+}
 
-        grid-template-columns:1fr;
+.features-subtitle {
+    color: var(--text-secondary);
+    font-size: 18px;
+    line-height: 1.6; /* Slightly tightened from 1.8 */
+    margin: auto;
+    max-width: 600px; /* Constrains text for better visual balance */
+}
 
+/* =====================================================
+   FEATURE GRID
+===================================================== */
+
+.feature-grid {
+    margin-top: 55px; /* Reduced from 70px to eliminate dead space */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width: 1100px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
 
+@media(max-width: 700px) {
+    .features {
+        margin: 40px auto 70px;
+    }
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+    .features h2 {
+        font-size: 34px;
+    }
+    .features-subtitle {
+        font-size: 16px;
+    }
 }

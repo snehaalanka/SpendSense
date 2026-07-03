@@ -1,80 +1,56 @@
 import "./Features.css";
-
 import FeatureCard from "../FeatureCard/FeatureCard";
-
-import {
-Mic,
-BrainCircuit,
-ChartPie,
-PiggyBank
-} from "lucide-react";
+import { Mic, BrainCircuit, ChartPie, PiggyBank } from "lucide-react";
 
 const Features = () => {
+  return (
+    <section className="features" id="features">
+      
+      {/* Header Area */}
+      <div className="section-header">
+        <span className="section-tag">
+          Why SpendSense?
+        </span>
+        <h2>
+          Powerful Features for
+          <span> Smarter Finance</span>
+        </h2>
+        <p className="features-subtitle">
+          Everything you need to manage expenses,
+          analyze spending, and build healthier
+          financial habits with AI.
+        </p>
+      </div>
 
-return(
+      {/* Grid Area */}
+      <div className="feature-grid">
+        <FeatureCard
+          icon={<Mic size={36} />}
+          title="Voice Expense Entry"
+          description="Simply speak naturally and let AI automatically record and categorize your expenses."
+        />
 
-<section className="features">
+        <FeatureCard
+          icon={<BrainCircuit size={36} />}
+          title="AI Insights"
+          description="Receive intelligent spending analysis and personalized financial recommendations."
+        />
 
-<h2>
+        <FeatureCard
+          icon={<ChartPie size={36} />}
+          title="Interactive Analytics"
+          description="Visualize your financial habits using beautiful charts and detailed reports."
+        />
 
-Powerful Features
-
-</h2>
-
-<p className="features-subtitle">
-
-Everything you need to manage your money smarter.
-
-</p>
-
-<div className="feature-grid">
-
-<FeatureCard
-
-icon={<Mic size={38}/>}
-
-title="Voice Entry"
-
-description="Speak naturally and let AI record your expenses."
-
-/>
-
-<FeatureCard
-
-icon={<BrainCircuit size={38}/>}
-
-title="AI Insights"
-
-description="Receive personalized financial suggestions."
-
-/>
-
-<FeatureCard
-
-icon={<ChartPie size={38}/>}
-
-title="Analytics"
-
-description="Visualize your spending with interactive charts."
-
-/>
-
-<FeatureCard
-
-icon={<PiggyBank size={38}/>}
-
-title="Savings Goals"
-
-description="Set savings goals and monitor your progress."
-
-/>
-
-</div>
-
-</section>
-
-)
-
-}
+        <FeatureCard
+          icon={<PiggyBank size={36} />}
+          title="Savings Goals"
+          description="Set savings targets, monitor progress and receive AI suggestions to achieve them faster."
+        />
+      </div>
+      
+    </section>
+  );
+};
 
 export default Features;

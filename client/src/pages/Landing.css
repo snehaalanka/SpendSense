@@ -1,0 +1,15 @@
+.landing-page{
+
+    min-height:100vh;
+
+    background:var(--background);
+
+    transition:.3s;
+
+}
+
+.landing-page main{
+
+    overflow:hidden;
+
+}
