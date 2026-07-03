@@ -23,7 +23,6 @@ const Login = () => {
 
       login(data.user, data.token);
       toast.success("Login Successful!");
-
       navigate("/dashboard");
     } catch (error) {
       toast.error(

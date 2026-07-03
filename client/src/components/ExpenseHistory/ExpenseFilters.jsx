@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
+import { saveAs } from "file-saver";
 
 import {
   Search,
@@ -23,11 +24,17 @@ const categories = [
   { value: "Entertainment", label: "Entertainment" },
 ];
 
-const ExpenseFilters = () => {
+const ExpenseFilters = ({
+  search,
+  setSearch,
+  category,
+  setCategory,
+  selectedDate,
+  setSelectedDate,
+}) => {
 
   const { theme } = useTheme();
 
-  const [selectedDate, setSelectedDate] = useState(null);
 
   const selectStyles = {
 
@@ -155,6 +162,43 @@ const ExpenseFilters = () => {
     }),
 
   };
+  const exportCSV = () => {
+
+  const rows = [
+    ["Expense","Category","Amount","Payment","Date"]
+  ];
+
+  expenses.forEach((expense)=>{
+
+    rows.push([
+
+      expense.title,
+
+      expense.category,
+
+      expense.amount,
+
+      expense.paymentMethod,
+
+      new Date(expense.date).toLocaleDateString()
+
+    ]);
+
+  });
+
+  const csv =
+    rows
+      .map((row)=>row.join(","))
+      .join("\n");
+
+  const blob = new Blob(
+    [csv],
+    {type:"text/csv;charset=utf-8;"}
+  );
+
+  saveAs(blob,"expenses.csv");
+
+};
 
   return (
 
@@ -165,12 +209,11 @@ const ExpenseFilters = () => {
         <Search size={18}/>
 
         <input
-
-          type="text"
-
-          placeholder="Search expenses..."
-
-        />
+    type="text"
+    placeholder="Search expense..."
+    value={search}
+    onChange={(e)=>setSearch(e.target.value)}
+/>
 
       </div>
 
@@ -180,15 +223,23 @@ const ExpenseFilters = () => {
 
         <Select
 
-          options={categories}
+options={categories}
 
-          defaultValue={categories[0]}
+value={
+  categories.find(
+    (item) => item.value === category
+  )
+}
 
-          styles={selectStyles}
+onChange={(option) =>
+  setCategory(option.value)
+}
 
-          isSearchable={false}
+styles={selectStyles}
 
-        />
+isSearchable={false}
+
+/>
 
       </div>
 
@@ -200,7 +251,7 @@ const ExpenseFilters = () => {
 
           selected={selectedDate}
 
-          onChange={(date)=>setSelectedDate(date)}
+onChange={setSelectedDate}
 
           placeholderText="Select Date"
 
@@ -210,13 +261,19 @@ const ExpenseFilters = () => {
 
       </div>
 
-      <button className="export-btn">
+      <button
 
-        <Download size={18}/>
+className="export-btn"
 
-        Export
+onClick={exportCSV}
 
-      </button>
+>
+
+<Download size={18}/>
+
+Export
+
+</button>
 
     </div>
 
