@@ -13,15 +13,22 @@ import {
   Pencil,
   Save,
   Lock,
+  Wallet,
 } from "lucide-react";
 
 const SettingsList = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
+  // Component States
   const [showProfileForm, setShowProfileForm] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [notifications, setNotifications] = useState(true);
+
+  // Budget States
+  const [budget, setBudget] = useState(5000);
+  const [showBudgetForm, setShowBudgetForm] = useState(false);
+  const [tempBudget, setTempBudget] = useState(5000);
 
   const [profile, setProfile] = useState({
     name: "Uday Kumar",
@@ -67,6 +74,15 @@ const SettingsList = () => {
       confirmPassword: "",
     });
     setShowPasswordForm(false);
+  };
+
+ const handleSaveBudget = () => {
+    // If the input is left blank, default to 0 (or you could default back to 'budget')
+    const finalBudget = tempBudget === "" ? 0 : tempBudget;
+    
+    setBudget(finalBudget);
+    setShowBudgetForm(false);
+    toast.success("Monthly budget updated successfully");
   };
 
   const logout = () => {
@@ -332,6 +348,62 @@ const SettingsList = () => {
           </div>
         </div>
       )}
+
+      {/* ===========================
+          MONTHLY BUDGET
+      =========================== */}
+      <div className="budget-card">
+        <div className="setting-title">
+          <Wallet size={20} />
+          <div>
+            <h3>Monthly Budget</h3>
+            <p>Set your monthly spending limit</p>
+          </div>
+        </div>
+        <div className="setting-row">
+          {!showBudgetForm ? (
+            <>
+              <div className="setting-name">
+                <span>Current Budget</span>
+                <small>₹ {budget.toLocaleString()}</small>
+              </div>
+              <button
+                className="edit-profile-btn"
+                onClick={() => {
+                  setTempBudget(budget);
+                  setShowBudgetForm(true);
+                }}
+              >
+                Change
+              </button>
+            </>
+          ) : (
+            <div className="budget-edit-wrapper">
+              <input
+                type="number"
+                className="budget-input"
+                value={tempBudget}
+                onChange={(e) => setTempBudget(e.target.value === "" ? "" : Number(e.target.value))}
+                placeholder="Enter amount"
+              />
+              <div className="budget-action-buttons">
+                <button
+                  className="cancel-btn"
+                  onClick={() => setShowBudgetForm(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="save-btn"
+                  onClick={handleSaveBudget}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* ===========================
           LOGOUT

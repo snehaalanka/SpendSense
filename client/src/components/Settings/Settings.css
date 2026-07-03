@@ -513,6 +513,60 @@
         width:100%;
     }
 }
+/* ======================================================
+   BUDGET CARD
+====================================================== */
+
+.budget-card {
+    margin-top: 22px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    animation: fadeUp .35s ease;
+}
+
+.budget-edit-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+.budget-input {
+    flex: 1;
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    color: var(--text-primary);
+    outline: none;
+    transition: .25s;
+    font-weight: 500;
+}
+
+.budget-input:focus {
+    border-color: #2563EB;
+}
+
+.budget-action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+@media(max-width: 900px) {
+    .budget-edit-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .budget-action-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}
 
 /* ======================================================
    ANIMATION
