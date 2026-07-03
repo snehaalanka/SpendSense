@@ -92,11 +92,7 @@ const Register = () => {
 
         {/* Logo */}
 
-        <div className="logo">
-
-          <h2>SpendSense</h2>
-
-        </div>
+        
 
         {/* Header */}
 

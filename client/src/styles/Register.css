@@ -54,24 +54,34 @@
    LOGO
 ===================================================== */
 
-.logo{
+/* =====================================================
+   AUTH LOGO (Scoped to Login)
+===================================================== */
 
-    text-align:center;
+/* =====================================================
+   AUTH LOGO (Scoped to Register)
+===================================================== */
 
-    margin-bottom:30px;
+/* =====================================================
+   AUTH LOGO (Scoped to Register)
+===================================================== */
 
+.register-card .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 35px; /* <-- This adds the gap below SpendSense */
+    text-decoration: none;
 }
 
-.logo h2{
-
-    font-size:30px;
-
-    font-weight:700;
-
-    color:#2563EB;
-
-    letter-spacing:.5px;
-
+.register-card .logo h2 {
+    font-size: 32px; 
+    font-weight: 700;
+    color: #2563EB;
+    letter-spacing: -0.5px;
+    margin: 0;
+    text-align: center;
 }
 
 /* =====================================================
