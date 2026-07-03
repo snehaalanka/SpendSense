@@ -41,6 +41,7 @@ const AppRoutes = () => {
           <Route path="/ask-ai" element={<AskAI />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/expense-history" element={<ExpenseHistory />} />
         </Route>
 
       </Routes>
