@@ -265,7 +265,7 @@ onChange={setSelectedDate}
 
 className="export-btn"
 
-onClick={exportCSV}
+Export
 
 >
 

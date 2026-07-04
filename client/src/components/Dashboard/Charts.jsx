@@ -1,29 +1,96 @@
+import { useEffect, useState } from "react";
 import "../../styles/Charts.css";
+import {
+  getCategorySummary,
+  getWeeklySpending,
+} from "../../api/dashboardApi";;
 
-const categories = [
-  { name: "Food", value: 36, color: "#2563EB" },
-  { name: "Travel", value: 22, color: "#10B981" },
-  { name: "Shopping", value: 18, color: "#F59E0B" },
-  { name: "Bills", value: 14, color: "#EF4444" },
-  { name: "Others", value: 10, color: "#8B5CF6" },
+const days = ["S", "M", "T", "W", "T", "F", "S"];
+
+const colors = [
+  "#2563EB",
+  "#10B981",
+  "#F59E0B",
+  "#EF4444",
+  "#8B5CF6",
+  "#06B6D4",
 ];
 
-const weekly = [55, 92, 70, 48, 65, 100, 82];
-
 const Charts = () => {
+
+  const token = localStorage.getItem("token");
+
+  const [categories, setCategories] = useState([]);
+  const [weekly, setWeekly] = useState([]);
+
+ useEffect(() => {
+
+  fetchCategories();
+
+  fetchWeeklySpending();
+
+}, []);
+const fetchWeeklySpending = async () => {
+
+  try {
+
+    const data = await getWeeklySpending(token);
+
+    const weekData = [0, 0, 0, 0, 0, 0, 0];
+
+    data.forEach(item => {
+
+      weekData[item._id - 1] = item.total;
+
+    });
+
+    setWeekly(weekData);
+
+  } catch (err) {
+
+    console.log(err);
+
+  }
+
+};
+
+  const fetchCategories = async () => {
+    try {
+
+      const data = await getCategorySummary(token);
+
+console.log("Category Response:", data);
+
+      console.log(data);
+
+      const total = data.reduce(
+        (sum, item) => sum + item.total,
+        0
+      );
+
+      const formatted = data.map((item, index) => ({
+        name: item._id,
+        value: total ? Math.round((item.total / total) * 100) : 0,
+        color: colors[index % colors.length],
+      }));
+
+      setCategories(formatted);
+
+    } catch (err) {
+
+      console.log(err);
+
+    }
+  };
+
   return (
     <div className="charts-grid">
-
-      {/* Expense Categories */}
 
       <div className="chart-card">
 
         <div className="chart-header">
-
           <h3>Expense Categories</h3>
-
           <span>This Month</span>
-
         </div>
 
         <div className="chart-body">
@@ -64,8 +131,6 @@ const Charts = () => {
 
       </div>
 
-      {/* Weekly Spending */}
-
       <div className="chart-card">
 
         <div className="chart-header">
@@ -78,7 +143,7 @@ const Charts = () => {
 
         <div className="bars">
 
-          {weekly.map((height, index) => (
+          {weekly.map((amount, index) => (
 
             <div
               className="bar-item"
@@ -88,12 +153,12 @@ const Charts = () => {
               <div
                 className="bar"
                 style={{
-                  height: `${height * 2}px`,
+                  height: `${amount / 100}px`,
                 }}
               ></div>
 
               <small>
-                {["M", "T", "W", "T", "F", "S", "S"][index]}
+                {days[index]}
               </small>
 
             </div>

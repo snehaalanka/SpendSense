@@ -1,4 +1,5 @@
 import "../../styles/Topbar.css";
+import { useEffect, useState } from "react";
 
 import {
   Search,
@@ -12,6 +13,17 @@ import {
 import { useTheme } from "../../context/ThemeContext";
 
 const Topbar = () => {
+  const [user, setUser] = useState(null);
+
+useEffect(() => {
+
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (storedUser) {
+    setUser(storedUser);
+  }
+
+}, []);
 
   const { theme, toggleTheme } = useTheme();
 
@@ -32,7 +44,7 @@ const Topbar = () => {
 
           {greeting},
 
-          <span> Sneha 👋</span>
+          <span>{user?.name?.split(" ")[0]}</span>
 
         </h1>
 

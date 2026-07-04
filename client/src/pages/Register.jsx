@@ -41,22 +41,63 @@ const Register = () => {
       return;
 
     }
+    if (
+    !name.trim() ||
+    !email.trim() ||
+    !password ||
+    !confirmPassword
+) {
+    toast.error("Please fill all required fields.");
+    return;
+}
+
+if (!/^[A-Za-z ]{3,40}$/.test(name.trim())) {
+    toast.error(
+        "Name must contain only letters (3-40 characters)."
+    );
+    return;
+}
+
+if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+    toast.error("Please enter a valid email.");
+    return;
+}
+
+if (
+    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).{8,50}$/.test(password)
+) {
+    toast.error(
+        "Password must contain uppercase, lowercase, number and special character."
+    );
+    return;
+}
+
+if (
+    monthlyBudget &&
+    (Number(monthlyBudget) < 100 ||
+        Number(monthlyBudget) > 10000000)
+) {
+    toast.error(
+        "Budget must be between ₹100 and ₹10,000,000."
+    );
+    return;
+}
+
 
     setLoading(true);
 
     try {
 
       await registerUser({
-
-        name,
-
-        email,
-
-        password,
-
-        monthlyBudget,
-
-      });
+    name: name.trim(),
+    email: email.trim().toLowerCase(),
+    password,
+    monthlyBudget:
+        monthlyBudget === ""
+            ? undefined
+            : Number(monthlyBudget),
+});
+      
 
       toast.success("Registration Successful!");
 
@@ -132,7 +173,7 @@ const Register = () => {
 
               value={name}
 
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e)=>setName(e.target.value.replace(/\s+/g," "))}
 
               required
 
@@ -189,6 +230,10 @@ const Register = () => {
                 required
 
               />
+              <small className="password-hint">
+Must contain 8+ characters, uppercase, lowercase,
+number and special character.
+</small>
 
               <button
 
@@ -313,6 +358,9 @@ const Register = () => {
             <input
 
               type="number"
+min="100"
+max="10000000"
+step="1"
 
               placeholder="₹ Enter amount"
 

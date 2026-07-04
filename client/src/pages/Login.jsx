@@ -30,15 +30,26 @@ const Login = () => {
 
     e.preventDefault();
 
+    if (!email.trim() || !password) {
+    toast.error("Email and password are required.");
+    return;
+}
+
+if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+    toast.error("Please enter a valid email.");
+    return;
+}
+
     setLoading(true);
 
     try {
 
       const data = await loginUser({
 
-        email,
+        email: email.trim().toLowerCase(),
 
-        password,
+        password ,
+        
 
       });
 
@@ -154,6 +165,7 @@ const Login = () => {
                 required
 
               />
+            
 
               <button
 
