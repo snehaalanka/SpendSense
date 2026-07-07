@@ -106,15 +106,46 @@ const trimmedEmail = email.trim().toLowerCase();
                 message: "Invalid email or password",
             });
         }
+        // Check if account is temporarily locked
+if (
+  user.lockUntil &&
+  user.lockUntil > Date.now()
+) {
+  const secondsLeft = Math.ceil(
+    (user.lockUntil - Date.now()) / 1000
+  );
+
+  return res.status(429).json({
+    message: `Too many failed login attempts. Try again in ${secondsLeft} seconds.`,
+  });
+}
 
         // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
 
         if (!isMatch) {
-            return res.status(400).json({
-                message: "Invalid email or password",
-            });
-        }
+
+  user.loginAttempts += 1;
+
+  if (user.loginAttempts >= 5) {
+    user.lockUntil = new Date(Date.now() + 30 * 1000);
+    user.loginAttempts = 0;
+  }
+
+  await user.save();
+
+  return res.status(400).json({
+    message: "Invalid email or password",
+  });
+
+}
+// Reset failed attempts
+user.loginAttempts = 0;
+user.lockUntil = null;
+
+await user.save();
+
+        
 
         // Generate JWT Token
         const token = jwt.sign(

@@ -22,7 +22,7 @@ const getCategoryClass = (category) => {
   switch (category) {
     case "Food":
       return "category-food";
-    case "Transport":
+    case "Travel":
       return "category-transport";
     case "Shopping":
       return "category-shopping";
@@ -42,7 +42,7 @@ const getCategoryIcon = (category) => {
     case "Food":
       return <Pizza size={14} />;
 
-    case "Transport":
+    case "Travel":
       return <Car size={14} />;
 
     case "Shopping":
@@ -147,27 +147,141 @@ const handleEditChange = (e) => {
   });
 
 };
+const validateEditExpense = () => {
+  const title = editData.title.trim();
+  const notes = editData.notes.trim();
 
+  if (!title) {
+    toast.error("Expense title is required.");
+    return false;
+  }
+
+  if (title.length < 3) {
+    toast.error("Title must contain at least 3 characters.");
+    return false;
+  }
+
+  if (title.length > 50) {
+    toast.error("Title cannot exceed 50 characters.");
+    return false;
+  }
+
+  if (/^\d+$/.test(title)) {
+    toast.error("Title cannot contain only numbers.");
+    return false;
+  }
+
+  if (!/[A-Za-z]/.test(title)) {
+    toast.error("Title cannot contain only symbols.");
+    return false;
+  }
+
+  if (!editData.amount) {
+    toast.error("Amount is required.");
+    return false;
+  }
+
+  const amount = Number(editData.amount);
+
+  if (Number.isNaN(amount)) {
+    toast.error("Amount must be a valid number.");
+    return false;
+  }
+
+  if (amount <= 0) {
+    toast.error("Amount must be greater than ₹0.");
+    return false;
+  }
+
+  if (amount > 1000000) {
+    toast.error("Amount cannot exceed ₹10,00,000.");
+    return false;
+  }
+
+  if (!/^\d+(\.\d{1,2})?$/.test(editData.amount.toString())) {
+    toast.error("Amount can have at most 2 decimal places.");
+    return false;
+  }
+
+  if (!editData.category) {
+    toast.error("Please select a category.");
+    return false;
+  }
+
+  if (!editData.paymentMethod) {
+    toast.error("Please select a payment method.");
+    return false;
+  }
+
+  if (!editData.date) {
+    toast.error("Please select a date.");
+    return false;
+  }
+
+  const expenseDate = new Date(editData.date);
+  const today = new Date();
+
+  today.setHours(23, 59, 59, 999);
+
+  if (expenseDate > today) {
+    toast.error("Future dates are not allowed.");
+    return false;
+  }
+
+  if (notes.length > 300) {
+    toast.error("Notes cannot exceed 300 characters.");
+    return false;
+  }
+
+  return true;
+};
 const handleUpdateExpense = async () => {
+
+  if (!validateEditExpense()) {
+    return;
+  }
+
+  const updatedExpense = {
+    ...editData,
+    title: editData.title.trim(),
+    notes: editData.notes.trim(),
+  };
 
   try {
 
-    await updateExpense(
+    const response = await updateExpense(
       editingExpense._id,
-      editData,
+      updatedExpense,
       token
     );
+
+    if (response.budgetWarning) {
+      toast.warning(response.warningMessage);
+    }
 
     toast.success("Expense updated successfully!");
 
     setShowEditModal(false);
+
     setEditingExpense(null);
+
+    setEditData({
+      title: "",
+      amount: "",
+      category: "",
+      paymentMethod: "",
+      date: "",
+      notes: "",
+    });
 
     fetchExpenses();
 
   } catch (err) {
 
-    toast.error("Failed to update expense.");
+    toast.error(
+      err.response?.data?.message ||
+      "Failed to update expense."
+    );
 
   }
 
@@ -321,56 +435,64 @@ return (
         <input
           type="text"
           name="title"
+          maxLength={50}
           placeholder="Expense Title"
           value={editData.title}
           onChange={handleEditChange}
         />
 
         <input
-          type="number"
-          name="amount"
-          placeholder="Amount"
-          value={editData.amount}
-          onChange={handleEditChange}
-        />
+    type="number"
+    name="amount"
+    min="0.01"
+    max="1000000"
+    step="0.01"
+    value={editData.amount}
+    onChange={handleEditChange}
+/>
 
         <select
-          name="category"
-          value={editData.category}
-          onChange={handleEditChange}
-        >
-          <option>Food</option>
-          <option>Transport</option>
-          <option>Shopping</option>
-          <option>Entertainment</option>
-          <option>Bills</option>
-          <option>Education</option>
-        </select>
+  name="category"
+  value={editData.category}
+  onChange={handleEditChange}
+>
+  <option>Food</option>
+  <option>Shopping</option>
+  <option>Travel</option>
+  <option>Bills</option>
+  <option>Health</option>
+  <option>Education</option>
+  <option>Entertainment</option>
+  <option>Other</option>
+</select>
 
         <select
-          name="paymentMethod"
-          value={editData.paymentMethod}
-          onChange={handleEditChange}
-        >
-          <option>Cash</option>
-          <option>UPI</option>
-          <option>Card</option>
-          <option>Net Banking</option>
-        </select>
+  name="paymentMethod"
+  value={editData.paymentMethod}
+  onChange={handleEditChange}
+>
+  <option>Cash</option>
+  <option>UPI</option>
+  <option>Credit Card</option>
+  <option>Debit Card</option>
+  <option>Net Banking</option>
+</select>
 
         <input
-          type="date"
-          name="date"
-          value={editData.date}
-          onChange={handleEditChange}
-        />
+  type="date"
+  name="date"
+  value={editData.date}
+  max={new Date().toISOString().split("T")[0]}
+  onChange={handleEditChange}
+/>
 
         <textarea
-          name="notes"
-          placeholder="Notes"
-          value={editData.notes}
-          onChange={handleEditChange}
-        />
+  name="notes"
+  placeholder="Notes"
+  value={editData.notes}
+  onChange={handleEditChange}
+  maxLength={300}
+/>
 
       </div>
 
@@ -378,7 +500,22 @@ return (
 
         <button
           className="cancel-modal-btn"
-          onClick={() => setShowEditModal(false)}
+          onClick={() => {
+
+  setShowEditModal(false);
+
+  setEditingExpense(null);
+
+  setEditData({
+    title: "",
+    amount: "",
+    category: "",
+    paymentMethod: "",
+    date: "",
+    notes: "",
+  });
+
+}}
         >
           Cancel
         </button>

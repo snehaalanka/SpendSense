@@ -54,6 +54,15 @@ language: {
   type: String,
   default: "English",
 },
+loginAttempts: {
+  type: Number,
+  default: 0,
+},
+
+lockUntil: {
+  type: Date,
+  default: null,
+},
     
   },
   {

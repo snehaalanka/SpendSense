@@ -17,11 +17,13 @@ import "react-datepicker/dist/react-datepicker.css";
 const categories = [
   { value: "all", label: "All Categories" },
   { value: "Food", label: "Food" },
-  { value: "Transport", label: "Transport" },
   { value: "Shopping", label: "Shopping" },
+  { value: "Travel", label: "Travel" },
   { value: "Bills", label: "Bills" },
+  { value: "Health", label: "Health" },
   { value: "Education", label: "Education" },
   { value: "Entertainment", label: "Entertainment" },
+  { value: "Other", label: "Other" },
 ];
 
 const ExpenseFilters = ({

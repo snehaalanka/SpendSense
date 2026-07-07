@@ -19,13 +19,13 @@ import {
 
 const categoryOptions = [
   { value: "Food", label: "Food" },
-  { value: "Transport", label: "Transport" },
   { value: "Shopping", label: "Shopping" },
+  { value: "Travel", label: "Travel" },
   { value: "Bills", label: "Bills" },
+  { value: "Health", label: "Health" },
   { value: "Education", label: "Education" },
   { value: "Entertainment", label: "Entertainment" },
-  { value: "Health", label: "Health" },
-  { value: "Others", label: "Others" },
+  { value: "Other", label: "Other" },
 ];
 
 const paymentOptions = [
@@ -188,44 +188,143 @@ const ManualExpense = () => {
     });
 
   };
+  const validateExpense = () => {
+
+  const title = expense.title.trim();
+  const notes = expense.notes.trim();
+
+  if (!title) {
+    toast.error("Expense title is required.");
+    return false;
+  }
+
+  if (title.length < 3) {
+    toast.error("Title must contain at least 3 characters.");
+    return false;
+  }
+
+  if (title.length > 50) {
+    toast.error("Title cannot exceed 50 characters.");
+    return false;
+  }
+
+  if (/^\d+$/.test(title)) {
+    toast.error("Title cannot contain only numbers.");
+    return false;
+  }
+
+  if (!/[A-Za-z]/.test(title)) {
+    toast.error("Title cannot contain only symbols.");
+    return false;
+  }
+
+  if (!expense.amount) {
+    toast.error("Amount is required.");
+    return false;
+  }
+
+  const amount = Number(expense.amount);
+
+  if (Number.isNaN(amount)) {
+    toast.error("Amount must be a valid number.");
+    return false;
+  }
+
+  if (amount <= 0) {
+    toast.error("Amount must be greater than ₹0.");
+    return false;
+  }
+
+  if (amount > 1000000) {
+    toast.error("Amount cannot exceed ₹10,00,000.");
+    return false;
+  }
+
+  if (!/^\d+(\.\d{1,2})?$/.test(amount.toString())) {
+    toast.error("Amount can have at most 2 decimal places.");
+    return false;
+  }
+
+  if (!expense.category) {
+    toast.error("Please select a category.");
+    return false;
+  }
+
+  if (!expense.paymentMethod) {
+    toast.error("Please select a payment method.");
+    return false;
+  }
+
+  if (!expense.date) {
+    toast.error("Please select a date.");
+    return false;
+  }
+
+  const selectedDate = new Date(expense.date);
+
+  if (selectedDate > new Date()) {
+    toast.error("Future dates are not allowed.");
+    return false;
+  }
+
+  if (notes.length > 300) {
+    toast.error("Notes cannot exceed 300 characters.");
+    return false;
+  }
+
+  return true;
+};
 
   const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  if (!validateExpense()) {
+    return;
+  }
 
-      const token =
-        localStorage.getItem("token");
+  try {
 
-      await addExpense(expense, token);
+    const token = localStorage.getItem("token");
 
-      toast.success(
-        "Expense Added Successfully!"
-      );
+    const expenseData = {
+      ...expense,
+      title: expense.title.trim(),
+      notes: expense.notes.trim(),
+    };
 
-      setExpense({
+    const response = await addExpense(
+      expenseData,
+      token
+    );
 
-        title: "",
-        amount: "",
-        category: "",
-        paymentMethod: "",
-        date: "",
-        notes: "",
-
-      });
-
+    if (response.budgetWarning) {
+      toast.warning(response.warningMessage);
     }
 
-    catch {
+    toast.success("Expense Added Successfully!");
 
-      toast.error(
-        "Failed to Add Expense"
-      );
+    setExpense({
+      title: "",
+      amount: "",
+      category: "",
+      paymentMethod: "",
+      date: "",
+      notes: "",
+    });
 
-    }
+  }
 
-  };
+  catch (error) {
+
+    toast.error(
+      error.response?.data?.message ||
+      "Failed to Add Expense"
+    );
+
+  }
+
+};
 
   return (
     <>
@@ -260,12 +359,15 @@ const ManualExpense = () => {
           <label>Amount</label>
 
           <input
-            type="number"
-            name="amount"
-            placeholder="₹ Enter amount"
-            value={expense.amount}
-            onChange={handleChange}
-          />
+  type="number"
+  name="amount"
+  placeholder="₹ Enter amount"
+  min="0.01"
+  max="1000000"
+  step="0.01"
+  value={expense.amount}
+  onChange={handleChange}
+/>
 
         </div>
 
@@ -358,6 +460,7 @@ const ManualExpense = () => {
           <label>Date</label>
 
           <DatePicker
+    maxDate={new Date()}
 
             selected={
               expense.date
