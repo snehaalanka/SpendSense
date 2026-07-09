@@ -84,3 +84,12 @@ export const sendChatMessage = async (message, history, token) => {
   );
   return response.data;
 };
+
+export const getDashboardInsight = async (token) => {
+  const response = await axios.get(`${API}/dashboard-insight`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};

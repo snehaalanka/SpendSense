@@ -11,19 +11,42 @@ import {
 } from "lucide-react";
 
 import { useTheme } from "../../context/ThemeContext";
+import { getDashboardInsight } from "../../api/aiApi";
 
 const Topbar = () => {
+
   const [user, setUser] = useState(null);
 
-useEffect(() => {
+  const [insight, setInsight] = useState(null);
 
-  const storedUser = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
 
-  if (storedUser) {
-    setUser(storedUser);
-  }
+    const storedUser = JSON.parse(localStorage.getItem("user"));
 
-}, []);
+    if (storedUser) {
+      setUser(storedUser);
+    }
+
+    fetchInsight();
+
+  }, []);
+
+
+  const fetchInsight = async () => {
+
+    try {
+
+      const token = localStorage.getItem("token");
+
+      const data = await getDashboardInsight(token);
+
+      setInsight(data);
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  };
 
   const { theme, toggleTheme } = useTheme();
 
@@ -52,13 +75,31 @@ useEffect(() => {
 
           <Sparkles size={16}/>
 
-          <p>
+          {insight ? (
 
-            AI predicts you'll save
-            <strong> ₹4,200 </strong>
-            this month.
+            <p>
 
-          </p>
+              {insight.isOverBudgetPace ? (
+                <>
+                  AI predicts you'll exceed your budget by
+                  <strong> ₹{insight.predictedSavings} </strong>
+                  this month.
+                </>
+              ) : (
+                <>
+                  AI predicts you'll save
+                  <strong> ₹{insight.predictedSavings} </strong>
+                  this month.
+                </>
+              )}
+
+            </p>
+
+          ) : (
+
+            <p>Loading your AI prediction...</p>
+
+          )}
 
         </div>
 

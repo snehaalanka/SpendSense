@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "../../styles/InsightCard.css";
 
 import {
@@ -7,7 +10,40 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+import { getDashboardInsight } from "../../api/aiApi";
+
 const InsightCard = () => {
+
+  const navigate = useNavigate();
+
+  const [insight, setInsight] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchInsight();
+  }, []);
+
+  const fetchInsight = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const token = localStorage.getItem("token");
+
+      const data = await getDashboardInsight(token);
+
+      setInsight(data);
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
   return (
     <div className="insight-card">
 
@@ -30,7 +66,13 @@ const InsightCard = () => {
             <span>💰</span>
 
             <p>
-              You spent <strong>₹600</strong> yesterday.
+              {loading || !insight ? (
+                "Loading..."
+              ) : (
+                <>
+                  You spent <strong>₹{insight.yesterdaySpent}</strong> yesterday.
+                </>
+              )}
             </p>
 
           </div>
@@ -42,7 +84,7 @@ const InsightCard = () => {
             <span>📈</span>
 
             <p>
-              Food spending increased by <strong>18%</strong>.
+              {loading || !insight ? "Loading..." : insight.categoryTrendText}
             </p>
 
           </div>
@@ -54,7 +96,7 @@ const InsightCard = () => {
             <span>🎯</span>
 
             <p>
-              Weekend spending is usually higher.
+              {loading || !insight ? "Loading..." : insight.weekendInsightText}
             </p>
 
           </div>
@@ -71,7 +113,9 @@ const InsightCard = () => {
 
           <h3>Spending Trend</h3>
 
-          <p>Your expenses are under control.</p>
+          <p>
+            {loading || !insight ? "Loading..." : insight.spendingTrendLabel}
+          </p>
 
         </div>
 
@@ -81,13 +125,18 @@ const InsightCard = () => {
 
           <h3>Saving Tip</h3>
 
-          <p>Reduce food delivery by ₹500 this week.</p>
+          <p>
+            {loading || !insight ? "Loading..." : insight.savingTip}
+          </p>
 
         </div>
 
       </div>
 
-      <button className="analysis-btn">
+      <button
+        className="analysis-btn"
+        onClick={() => navigate("/analysis")}
+      >
 
         View Full Analysis
 

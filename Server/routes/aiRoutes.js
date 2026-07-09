@@ -13,6 +13,7 @@ const {
   getGoalPrediction,
   getGoalsAdvisor,
   chatWithAI,
+  getDashboardInsight,
 } = require("../controllers/aiController");
 
 // audio uploads are kept in memory only, forwarded straight to ai-service, never saved to disk
@@ -26,5 +27,6 @@ router.post("/transcribe", protect, upload.single("audio"), transcribeAudio);
 router.get("/goal-prediction/:id", protect, getGoalPrediction);
 router.get("/goals-advisor", protect, getGoalsAdvisor);
 router.post("/chat", protect, chatWithAI);
+router.get("/dashboard-insight", protect, getDashboardInsight);
 
 module.exports = router;

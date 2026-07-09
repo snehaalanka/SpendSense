@@ -416,6 +416,159 @@ const chatWithAI = async (req, res) => {
 };
 
 
+const sumExpensesByCategory = (expenses) => {
+
+  const totals = {};
+
+  expenses.forEach((e) => {
+    totals[e.category] = (totals[e.category] || 0) + e.amount;
+  });
+
+  return totals;
+
+};
+
+
+const getDashboardInsight = async (req, res) => {
+
+  try {
+
+    const userId = req.user.id;
+
+    const stats = await buildMonthlyStats(userId);
+
+    const now = new Date();
+
+    // yesterday's spend
+
+    const yesterdayStart = new Date(now);
+    yesterdayStart.setDate(now.getDate() - 1);
+    yesterdayStart.setHours(0, 0, 0, 0);
+
+    const yesterdayEnd = new Date(now);
+    yesterdayEnd.setHours(0, 0, 0, 0);
+
+    const yesterdayExpenses = await Expense.find({
+      user: userId,
+      date: { $gte: yesterdayStart, $lt: yesterdayEnd },
+    });
+
+    const yesterdaySpent = yesterdayExpenses.reduce((sum, e) => sum + e.amount, 0);
+
+    // last 7 days vs previous 7 days, per category, to catch a genuine trend
+
+    const last7Start = new Date(now);
+    last7Start.setDate(now.getDate() - 7);
+
+    const prev7Start = new Date(now);
+    prev7Start.setDate(now.getDate() - 14);
+
+    const last7Expenses = await Expense.find({
+      user: userId,
+      date: { $gte: last7Start, $lte: now },
+    });
+
+    const prev7Expenses = await Expense.find({
+      user: userId,
+      date: { $gte: prev7Start, $lt: last7Start },
+    });
+
+    const last7ByCategory = sumExpensesByCategory(last7Expenses);
+    const prev7ByCategory = sumExpensesByCategory(prev7Expenses);
+
+    let topMoverCategory = null;
+    let topMoverPercent = 0;
+
+    for (const category in last7ByCategory) {
+
+      const prevAmount = prev7ByCategory[category] || 0;
+
+      if (prevAmount === 0) continue;
+
+      const percentChange = Math.round(
+        ((last7ByCategory[category] - prevAmount) / prevAmount) * 100
+      );
+
+      if (percentChange > topMoverPercent) {
+        topMoverPercent = percentChange;
+        topMoverCategory = category;
+      }
+
+    }
+
+    const categoryTrendText = topMoverCategory
+      ? `${topMoverCategory} spending increased by ${topMoverPercent}% this week.`
+      : "Your spending pattern looks steady this week.";
+
+    // weekend pattern, reusing the same weekendPercent already computed for this month
+
+    const weekendInsightText =
+      stats.weekendPercent > 40
+        ? "Weekend spending is usually higher."
+        : "Your weekend spending is fairly balanced.";
+
+    // predicted savings based on current daily pace
+
+    const daysElapsed = now.getDate();
+
+    const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+
+    const dailyPace = stats.totalSpent / daysElapsed;
+
+    const projectedTotal = Math.round(dailyPace * daysInMonth);
+
+    const predictedSavings = stats.budget - projectedTotal;
+
+    const isOverBudgetPace = predictedSavings < 0;
+
+    // spending trend label, based on whether you're ahead or behind budget pace
+
+    const expectedSpendSoFar = (stats.budget / daysInMonth) * daysElapsed;
+
+    const spendingTrendLabel =
+      stats.totalSpent <= expectedSpendSoFar
+        ? "Your expenses are under control."
+        : "You're spending faster than planned this month.";
+
+    // reuse the existing /tips call in ai-service, just take the first tip
+
+    let savingTip = "Keep tracking your expenses to unlock personalized tips.";
+
+    try {
+
+      const aiResponse = await fetch(`${process.env.AI_SERVICE_URL}/tips`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ stats }),
+      });
+
+      if (aiResponse.ok) {
+        const aiData = await aiResponse.json();
+        savingTip = aiData.savingTips?.[0] || savingTip;
+      }
+
+    } catch (tipError) {
+      console.error("dashboard saving tip fetch failed:", tipError.message);
+    }
+
+    res.json({
+      predictedSavings: Math.abs(predictedSavings),
+      isOverBudgetPace,
+      yesterdaySpent,
+      categoryTrendText,
+      weekendInsightText,
+      spendingTrendLabel,
+      savingTip,
+    });
+
+  } catch (error) {
+    console.error("getDashboardInsight error:", error.message);
+    res.status(500).json({ message: "Failed to generate dashboard insight." });
+  }
+
+};
+
+
 module.exports = {
   getAnalysis,
   getReport,
@@ -424,4 +577,5 @@ module.exports = {
   getGoalPrediction,
   getGoalsAdvisor,
   chatWithAI,
+  getDashboardInsight,
 };
