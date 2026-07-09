@@ -4,7 +4,24 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-const SavingTips = () => {
+const SavingTips = ({ analysis, loading }) => {
+
+  if (loading || !analysis) {
+
+    return (
+      <div className="tips-card">
+        <h3>
+          <Lightbulb size={24} />
+          AI Saving Tips
+        </h3>
+        <p>Loading tips...</p>
+      </div>
+    );
+
+  }
+
+  const { savingTips, healthScore } = analysis;
+
   return (
     <div className="tips-card">
 
@@ -18,47 +35,20 @@ const SavingTips = () => {
 
       <ul>
 
-        <li>
+        {savingTips.map((tip, index) => (
 
-          <CircleCheck
-            size={18}
-            color="#22C55E"
-          />
+          <li key={index}>
 
-          <span>
-            Cook at home two more times a week to
-            reduce food expenses.
-          </span>
+            <CircleCheck
+              size={18}
+              color="#22C55E"
+            />
 
-        </li>
+            <span>{tip}</span>
 
-        <li>
+          </li>
 
-          <CircleCheck
-            size={18}
-            color="#22C55E"
-          />
-
-          <span>
-            Reducing food delivery orders could save
-            approximately <strong>₹900/month</strong>.
-          </span>
-
-        </li>
-
-        <li>
-
-          <CircleCheck
-            size={18}
-            color="#22C55E"
-          />
-
-          <span>
-            Spending after 9 PM is higher than usual.
-            Consider setting a nightly spending limit.
-          </span>
-
-        </li>
+        ))}
 
       </ul>
 
@@ -83,7 +73,7 @@ const SavingTips = () => {
 
           <span>
 
-            86 / 100
+            {healthScore} / 100
 
           </span>
 
@@ -91,7 +81,10 @@ const SavingTips = () => {
 
         <div className="score-bar">
 
-          <div className="score-fill"></div>
+          <div
+            className="score-fill"
+            style={{ width: `${healthScore}%` }}
+          ></div>
 
         </div>
 

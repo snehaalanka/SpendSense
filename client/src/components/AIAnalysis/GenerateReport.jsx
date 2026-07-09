@@ -1,10 +1,43 @@
+import { useState } from "react";
+import { toast } from "react-toastify";
+
 import {
   FileText,
   Sparkles,
   CheckCircle2,
 } from "lucide-react";
 
+import { generateReport } from "../../api/aiApi";
+
 const GenerateReport = () => {
+
+  const token = localStorage.getItem("token");
+
+  const [report, setReport] = useState("");
+
+  const [generating, setGenerating] = useState(false);
+
+
+  const handleGenerate = async () => {
+
+    try {
+
+      setGenerating(true);
+
+      const data = await generateReport(token);
+
+      setReport(data.report);
+
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to generate report.");
+    } finally {
+      setGenerating(false);
+    }
+
+  };
+
+
   return (
     <div className="report-card">
 
@@ -68,15 +101,27 @@ const GenerateReport = () => {
 
           </div>
 
+          {report && (
+
+            <p style={{ marginTop: "18px", whiteSpace: "pre-line" }}>
+              {report}
+            </p>
+
+          )}
+
         </div>
 
       </div>
 
-      <button className="report-btn">
+      <button
+        className="report-btn"
+        onClick={handleGenerate}
+        disabled={generating}
+      >
 
         <Sparkles size={18} />
 
-        Generate AI Report
+        {generating ? "Generating..." : "Generate AI Report"}
 
       </button>
 

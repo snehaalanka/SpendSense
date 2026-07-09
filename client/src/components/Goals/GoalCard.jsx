@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Laptop,
   Brain,
@@ -6,196 +7,182 @@ import {
   Target,
 } from "lucide-react";
 
-const GoalCard = () => {
+import { deleteGoal } from "../../api/goalApi";
+import AddMoneyModal from "./AddMoneyModel";
 
-  const target = 70000;
-  const saved = 28000;
+const GoalCard = ({ goal, fetchGoals }) => {
+  const [showMoneyModal, setShowMoneyModal] = useState(false);
 
+  const target = goal.targetAmount;
+  const saved = goal.savedAmount;
   const remaining = target - saved;
-
   const progress = Math.round((saved / target) * 100);
 
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Delete this goal?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await deleteGoal(goal._id, token);
+
+      fetchGoals();
+
+    } catch (err) {
+      console.log(err);
+      alert("Unable to delete goal");
+    }
+  };
+
   return (
+    <>
+      <div className="goal-card">
 
-    <div className="goal-card">
+        <div className="goal-top">
 
-      {/* =======================
-          Header
-      ======================== */}
+          <div className="goal-title">
 
-      <div className="goal-top">
+            <div>
+              <h3>{goal.goalName}</h3>
 
-        <div className="goal-title">
-
-          <div className="goal-icon">
-
-            <Laptop size={28} />
+              <p>
+                Target{" "}
+                {new Date(goal.targetDate).toLocaleDateString(
+                  "en-IN",
+                  {
+                    month: "long",
+                    year: "numeric",
+                  }
+                )}
+              </p>
+            </div>
 
           </div>
 
-          <div>
+          <span className="goal-status on-track">
+            🟡 {goal.status}
+          </span>
 
-            <h3>Laptop</h3>
+        </div>
 
-            <p>Target: December 2026</p>
+        <div className="goal-details">
 
+          <div className="goal-item">
+            <Target
+              size={18}
+              color="#2563EB"
+            />
+
+            <span>Target Amount</span>
+
+            <h2>
+              ₹{target.toLocaleString()}
+            </h2>
+          </div>
+
+          <div className="goal-item">
+            <PiggyBank
+              size={18}
+              color="#22C55E"
+            />
+
+            <span>Saved</span>
+
+            <h2>
+              ₹{saved.toLocaleString()}
+            </h2>
+          </div>
+
+          <div className="goal-item">
+            <Wallet
+              size={18}
+              color="#F59E0B"
+            />
+
+            <span>Remaining</span>
+
+            <h2>
+              ₹{remaining.toLocaleString()}
+            </h2>
           </div>
 
         </div>
 
-        <span className="goal-status on-track">
-
-          🟡 On Track
-
-        </span>
-
-      </div>
-
-      {/* =======================
-          Details
-      ======================== */}
-
-      <div className="goal-details">
-
-        <div className="goal-item">
-
-          <Target
-            size={18}
-            color="#2563EB"
-          />
-
-          <span>Target Amount</span>
-
-          <h2>
-
-            ₹{target.toLocaleString()}
-
-          </h2>
-
+        <div className="goal-progress">
+          <div
+            className="goal-fill"
+            style={{
+              width: `${progress}%`,
+            }}
+          ></div>
         </div>
 
-        <div className="goal-item">
-
-          <PiggyBank
-            size={18}
-            color="#22C55E"
-          />
-
-          <span>Saved</span>
-
-          <h2>
-
-            ₹{saved.toLocaleString()}
-
-          </h2>
-
-        </div>
-
-        <div className="goal-item">
-
-          <Wallet
-            size={18}
-            color="#F59E0B"
-          />
-
-          <span>Remaining</span>
-
-          <h2>
-
-            ₹{remaining.toLocaleString()}
-
-          </h2>
-
-        </div>
-
-      </div>
-
-      {/* =======================
-          Progress
-      ======================== */}
-
-      <div className="goal-progress">
-
-        <div
-          className="goal-fill"
+        <p
           style={{
-            width: `${progress}%`,
+            marginTop: 10,
+            color: "var(--text-secondary)",
+            fontWeight: 600,
           }}
-        ></div>
+        >
+          {progress}% Completed
+        </p>
 
-      </div>
+        <div className="goal-prediction">
 
-      <p
-        style={{
-          marginTop: "10px",
-          color: "var(--text-secondary)",
-          fontWeight: "600",
-        }}
-      >
+          <div className="prediction-left">
 
-        {progress}% Completed
+            <div className="prediction-icon">
+              <Brain size={24} />
+            </div>
 
-      </p>
+            <div>
+              <h4>AI Prediction</h4>
 
-      {/* =======================
-          AI Prediction
-      ======================== */}
-
-      <div className="goal-prediction">
-
-        <div className="prediction-left">
-
-          <div className="prediction-icon">
-
-            <Brain size={24} />
+              <p>
+                AI features coming soon...
+              </p>
+            </div>
 
           </div>
 
-          <div>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+            }}
+          >
+            <button
+              className="add-money-btn"
+              onClick={() => setShowMoneyModal(true)}
+            >
+              + Add Money
+            </button>
 
-            <h4>
-
-              AI Prediction
-
-            </h4>
-
-            <p>
-
-              At your current saving pace,
-              you'll achieve this goal in
-
-              <strong>
-
-                {" "}127 days
-
-              </strong>
-
-              by saving
-
-              <strong>
-
-                {" "}₹230/day
-
-              </strong>.
-
-            </p>
-
+            <button
+              className="delete-goal-btn"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
           </div>
 
         </div>
 
-        <button className="add-money-btn">
-
-          + Add Money
-
-        </button>
-
       </div>
 
-    </div>
-
+      {showMoneyModal && (
+        <AddMoneyModal
+          goal={goal}
+          onClose={() => setShowMoneyModal(false)}
+          onMoneyAdded={fetchGoals}
+        />
+      )}
+    </>
   );
-
 };
 
 export default GoalCard;

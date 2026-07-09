@@ -5,7 +5,22 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 
-const InsightCards = () => {
+const InsightCards = ({ analysis, loading }) => {
+
+  if (loading || !analysis) {
+
+    return (
+      <div className="insight-cards">
+        <div className="insight-card">Loading...</div>
+        <div className="insight-card">Loading...</div>
+        <div className="insight-card">Loading...</div>
+      </div>
+    );
+
+  }
+
+  const { spendingSummary, weekendSpending, highestCategory } = analysis;
+
   return (
     <div className="insight-cards">
 
@@ -20,17 +35,17 @@ const InsightCards = () => {
         <h4>Spending Summary</h4>
 
         <div className="insight-value">
-          36%
+          {spendingSummary.percent}%
         </div>
 
         <p className="insight-description">
           of your monthly budget was spent on
-          <strong> Food</strong>.
+          <strong> {spendingSummary.category || "N/A"}</strong>.
         </p>
 
         <div className="trend">
           <ArrowUpRight size={16} />
-          +8% from last month
+          Based on this month's data
         </div>
 
       </div>
@@ -46,17 +61,18 @@ const InsightCards = () => {
         <h4>Weekend Spending</h4>
 
         <div className="insight-value">
-          48%
+          {weekendSpending.percent}%
         </div>
 
         <p className="insight-description">
-          You spend significantly more on weekends
-          than on weekdays.
+          of your total spending happened on weekends.
         </p>
 
         <div className="trend">
           <ArrowUpRight size={16} />
-          Weekend spending increased
+          {weekendSpending.percent > 50
+            ? "Weekend spending is high"
+            : "Weekend spending is under control"}
         </div>
 
       </div>
@@ -72,17 +88,17 @@ const InsightCards = () => {
         <h4>Highest Expense Category</h4>
 
         <div className="insight-value">
-          Food
+          {highestCategory.name || "N/A"}
         </div>
 
         <p className="insight-description">
-          Food remains your largest spending category
+          {highestCategory.name} remains your largest spending category
           this month.
         </p>
 
         <div className="trend">
           <ArrowUpRight size={16} />
-          ₹8,420 spent this month
+          ₹{highestCategory.amount} spent this month
         </div>
 
       </div>
