@@ -1,15 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import { saveAs } from "file-saver";
-
-import {
-  Search,
-  Filter,
-  Calendar,
-  Download,
-} from "lucide-react";
-
+import { Search, Filter, Calendar } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -34,253 +26,100 @@ const ExpenseFilters = ({
   selectedDate,
   setSelectedDate,
 }) => {
-
   const { theme } = useTheme();
 
-
   const selectStyles = {
-
     control: (provided, state) => ({
-
       ...provided,
-
-      backgroundColor:
-        theme === "dark"
-          ? "#111827"
-          : "#ffffff",
-
+      backgroundColor: theme === "dark" ? "#111827" : "#ffffff",
       border: `1px solid ${
-        state.isFocused
-          ? "#2563EB"
-          : theme === "dark"
-          ? "#374151"
-          : "#D1D5DB"
+        state.isFocused ? "#2563EB" : theme === "dark" ? "#374151" : "#D1D5DB"
       }`,
-
       borderRadius: "12px",
-
       minHeight: "50px",
-
       boxShadow: "none",
-
       cursor: "pointer",
-
       transition: ".25s",
-
       "&:hover": {
-
-        borderColor:"#2563EB",
-
+        borderColor: "#2563EB",
       },
-
     }),
-
     menu: (provided) => ({
-
       ...provided,
-
-      backgroundColor:
-        theme === "dark"
-          ? "#1E293B"
-          : "#ffffff",
-
-      borderRadius:"12px",
-
-      overflow:"hidden",
-
-      border:`1px solid ${
-        theme === "dark"
-          ? "#374151"
-          : "#E5E7EB"
-      }`,
-
+      backgroundColor: theme === "dark" ? "#1E293B" : "#ffffff",
+      borderRadius: "12px",
+      overflow: "hidden",
+      border: `1px solid ${theme === "dark" ? "#374151" : "#E5E7EB"}`,
     }),
-
-    option: (provided,state)=>({
-
+    option: (provided, state) => ({
       ...provided,
-
-      backgroundColor:state.isFocused
-      ? "#2563EB"
-      : theme==="dark"
-      ? "#1E293B"
-      : "#ffffff",
-
-      color:state.isFocused
-      ? "#ffffff"
-      : theme==="dark"
-      ? "#ffffff"
-      : "#111827",
-
-      cursor:"pointer",
-
+      backgroundColor: state.isFocused
+        ? "#2563EB"
+        : theme === "dark"
+        ? "#1E293B"
+        : "#ffffff",
+      color: state.isFocused
+        ? "#ffffff"
+        : theme === "dark"
+        ? "#ffffff"
+        : "#111827",
+      cursor: "pointer",
     }),
-
-    singleValue:(provided)=>({
-
+    singleValue: (provided) => ({
       ...provided,
-
-      color:
-      theme==="dark"
-      ? "#ffffff"
-      : "#111827",
-
+      color: theme === "dark" ? "#ffffff" : "#111827",
     }),
-
-    placeholder:(provided)=>({
-
+    placeholder: (provided) => ({
       ...provided,
-
-      color:
-      theme==="dark"
-      ? "#94A3B8"
-      : "#6B7280",
-
+      color: theme === "dark" ? "#94A3B8" : "#6B7280",
     }),
-
-    input:(provided)=>({
-
+    input: (provided) => ({
       ...provided,
-
-      color:
-      theme==="dark"
-      ? "#ffffff"
-      : "#111827",
-
+      color: theme === "dark" ? "#ffffff" : "#111827",
     }),
-
-    dropdownIndicator:(provided)=>({
-
+    dropdownIndicator: (provided) => ({
       ...provided,
-
-      color:"#2563EB",
-
+      color: "#2563EB",
     }),
-
-    indicatorSeparator:()=>({
-
-      display:"none",
-
+    indicatorSeparator: () => ({
+      display: "none",
     }),
-
   };
-  const exportCSV = () => {
-
-  const rows = [
-    ["Expense","Category","Amount","Payment","Date"]
-  ];
-
-  expenses.forEach((expense)=>{
-
-    rows.push([
-
-      expense.title,
-
-      expense.category,
-
-      expense.amount,
-
-      expense.paymentMethod,
-
-      new Date(expense.date).toLocaleDateString()
-
-    ]);
-
-  });
-
-  const csv =
-    rows
-      .map((row)=>row.join(","))
-      .join("\n");
-
-  const blob = new Blob(
-    [csv],
-    {type:"text/csv;charset=utf-8;"}
-  );
-
-  saveAs(blob,"expenses.csv");
-
-};
 
   return (
-
     <div className="filter-card">
-
       <div className="filter-input">
-
-        <Search size={18}/>
-
+        <Search size={18} />
         <input
-    type="text"
-    placeholder="Search expense..."
-    value={search}
-    onChange={(e)=>setSearch(e.target.value)}
-/>
-
+          type="text"
+          placeholder="Search expense..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
 
       <div className="filter-select">
-
-        <Filter size={18}/>
-
+        <Filter size={18} />
         <Select
-
-options={categories}
-
-value={
-  categories.find(
-    (item) => item.value === category
-  )
-}
-
-onChange={(option) =>
-  setCategory(option.value)
-}
-
-styles={selectStyles}
-
-isSearchable={false}
-
-/>
-
+          options={categories}
+          value={categories.find((item) => item.value === category)}
+          onChange={(option) => setCategory(option.value)}
+          styles={selectStyles}
+          isSearchable={false}
+        />
       </div>
 
       <div className="filter-date">
-
-        <Calendar size={18}/>
-
+        <Calendar size={18} />
         <DatePicker
-
           selected={selectedDate}
-
-onChange={setSelectedDate}
-
+          onChange={setSelectedDate}
           placeholderText="Select Date"
-
           dateFormat="dd MMM yyyy"
-
         />
-
       </div>
-
-      <button
-
-className="export-btn"
-
-Export
-
->
-
-<Download size={18}/>
-
-Export
-
-</button>
-
     </div>
-
   );
-
 };
 
 export default ExpenseFilters;

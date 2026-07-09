@@ -2,939 +2,507 @@
    PAGE
 ====================================================== */
 
-.history-page{
-
-    padding:24px;
-
+.history-page {
+    padding: 24px;
 }
 
-.history-header{
-
-    margin-bottom:24px;
-
+.history-header {
+    margin-bottom: 24px;
 }
 
-.history-header h1{
-
-    font-size:34px;
-
-    font-weight:700;
-
-    color:var(--text-primary);
-
-    margin-bottom:6px;
-
+.history-header h1 {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -.5px;
 }
 
-.history-header p{
-
-    color:var(--text-secondary);
-
-    font-size:15px;
-
+.history-header p {
+    margin-top: 5px;
+    font-size: 15px;
+    color: var(--text-secondary);
 }
 
 /* ======================================================
    FILTER TOOLBAR
 ====================================================== */
 
-.filter-card{
-
-    display:grid;
-
-    grid-template-columns:
-    2fr
-    1.3fr
-    1.2fr
-    150px;
-
-    gap:18px;
-
-    padding:20px;
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:20px;
-
-    box-shadow:var(--shadow);
-
-    margin-bottom:26px;
-
-    align-items:center;
-
+.filter-card {
+    display: grid;
+    /* Distribute the 3 remaining elements uniformly */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    padding: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 26px;
+    align-items: center;
 }
 
 /* ======================================================
    SEARCH
 ====================================================== */
 
-.filter-input{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    height:52px;
-
-    padding:0 18px;
-
-    background:var(--background);
-
-    border:1px solid var(--border);
-
-    border-radius:14px;
-
-    transition:.25s;
-
+.filter-input {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 18px;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: .25s;
 }
 
-.filter-input:hover{
-
-    border-color:#2563EB;
-
+.filter-input:hover {
+    border-color: #2563EB;
 }
 
-.filter-input svg{
-
-    color:#2563EB;
-
-    flex-shrink:0;
-
+.filter-input svg {
+    color: #2563EB;
+    flex-shrink: 0;
 }
 
-.filter-input input{
-
-    flex:1;
-
-    border:none;
-
-    outline:none;
-
-    background:transparent;
-
-    color:var(--text-primary);
-
-    font-size:15px;
-
+.filter-input input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 15px;
 }
 
-.filter-input input::placeholder{
-
-    color:var(--text-secondary);
-
+.filter-input input::placeholder {
+    color: var(--text-secondary);
 }
 
 /* ======================================================
    CATEGORY
 ====================================================== */
 
-.filter-select{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    height:52px;
-
-    padding:0 16px;
-
-    background:var(--background);
-
-    border:1px solid var(--border);
-
-    border-radius:14px;
-
-    transition:.25s;
-
+.filter-select {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 16px;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: .25s;
 }
 
-.filter-select:hover{
-
-    border-color:#2563EB;
-
+.filter-select:hover {
+    border-color: #2563EB;
 }
 
-.filter-select svg{
-
-    color:#2563EB;
-
-    flex-shrink:0;
-
+.filter-select svg {
+    color: #2563EB;
+    flex-shrink: 0;
 }
 
 /* React Select */
-
-.filter-select .css-b62m3t-container{
-
-    flex:1;
-
+.filter-select .css-b62m3t-container {
+    flex: 1;
 }
 
-.filter-select .css-13cymwt-control{
-
-    background:transparent !important;
-
-    border:none !important;
-
-    box-shadow:none !important;
-
-    min-height:48px;
-
+.filter-select .css-13cymwt-control {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    min-height: 48px;
 }
 
-.filter-select .css-t3ipsp-control{
-
-    background:transparent !important;
-
-    border:none !important;
-
-    box-shadow:none !important;
-
+.filter-select .css-t3ipsp-control {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-.filter-select .css-1jqq78o-placeholder{
-
-    color:var(--text-secondary);
-
+.filter-select .css-1jqq78o-placeholder {
+    color: var(--text-secondary);
 }
 
-.filter-select .css-1dimb5e-singleValue{
-
-    color:var(--text-primary);
-
+.filter-select .css-1dimb5e-singleValue {
+    color: var(--text-primary);
 }
 
-.filter-select .css-1xc3v61-indicatorContainer{
-
-    color:#2563EB;
-
+.filter-select .css-1xc3v61-indicatorContainer {
+    color: #2563EB;
 }
+
 /* ======================================================
    DATE PICKER
 ====================================================== */
 
-.filter-date{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    height:52px;
-
-    padding:0 16px;
-
-    background:var(--background);
-
-    border:1px solid var(--border);
-
-    border-radius:14px;
-
-    transition:.25s;
-
+.filter-date {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 16px;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: .25s;
 }
 
-.filter-date:hover{
-
-    border-color:#2563EB;
-
+.filter-date:hover {
+    border-color: #2563EB;
 }
 
-.filter-date svg{
-
-    color:#2563EB;
-
-    flex-shrink:0;
-
+.filter-date svg {
+    color: #2563EB;
+    flex-shrink: 0;
 }
 
-.filter-date input{
-
-    width:100%;
-
-    border:none;
-
-    outline:none;
-
-    background:transparent;
-
-    color:var(--text-primary);
-
-    font-size:15px;
-
-    cursor:pointer;
-
+.filter-date input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 15px;
+    cursor: pointer;
 }
 
-.filter-date input::placeholder{
-
-    color:var(--text-secondary);
-
-}
-
-/* ======================================================
-   EXPORT BUTTON
-====================================================== */
-
-.export-btn{
-
-    height:52px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:linear-gradient(
-        135deg,
-        #2563EB,
-        #3B82F6
-    );
-
-    color:white;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:10px;
-
-    transition:.25s;
-
-}
-
-.export-btn:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:0 12px 25px rgba(37,99,235,.35);
-
+.filter-date input::placeholder {
+    color: var(--text-secondary);
 }
 
 /* ======================================================
    TABLE HEADER
 ====================================================== */
 
-.history-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:18px;
-
+.history-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
 }
 
-.history-top h2{
-
-    font-size:22px;
-
-    color:var(--text-primary);
-
-    font-weight:700;
-
+.history-top h2 {
+    font-size: 22px;
+    color: var(--text-primary);
+    font-weight: 700;
 }
 
-.total-records{
-
-    padding:8px 16px;
-
-    background:rgba(37,99,235,.12);
-
-    color:#2563EB;
-
-    border-radius:999px;
-
-    font-size:13px;
-
-    font-weight:600;
-
+.total-records {
+    padding: 8px 16px;
+    background: rgba(37, 99, 235, .12);
+    color: #2563EB;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 /* ======================================================
    TABLE CARD
 ====================================================== */
 
-.table-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:22px;
-
-    padding:22px;
-
-    box-shadow:var(--shadow);
-
-    overflow:hidden;
-
+.table-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    animation: fadeUp .4s ease;
 }
 
 /* ======================================================
    TABLE
 ====================================================== */
 
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-thead{
-
-    background:var(--background);
-
+thead {
+    background: var(--background);
 }
 
-th{
-
-    padding:18px 20px;
-
-    text-align:left;
-
-    color:var(--text-secondary);
-
-    font-size:14px;
-
-    font-weight:600;
-
-    border-bottom:1px solid var(--border);
-
+th {
+    padding: 18px 20px;
+    text-align: left;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
 }
 
-th:first-child{
-
-    border-top-left-radius:14px;
-
+th:first-child {
+    border-top-left-radius: 14px;
 }
 
-th:last-child{
-
-    border-top-right-radius:14px;
-
+th:last-child {
+    border-top-right-radius: 14px;
 }
 
-tbody tr{
-
-    transition:.25s;
-
+tbody tr {
+    transition: .25s;
 }
 
-tbody tr:hover{
-
-    background:rgba(37,99,235,.04);
-
+tbody tr:hover {
+    background: rgba(37, 99, 235, .04);
 }
 
-td{
-
-    padding:18px 20px;
-
-    border-bottom:1px solid var(--border);
-
-    color:var(--text-primary);
-
-    font-size:15px;
-
-    vertical-align:middle;
-
+td {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 15px;
+    vertical-align: middle;
 }
+
 /* ======================================================
    CATEGORY BADGES
 ====================================================== */
 
-.category-badge{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:6px;
-
-    padding:6px 12px;
-
-    border-radius:999px;
-
-    font-size:12px;
-
-    font-weight:600;
-
+.category-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-.category-food{
-
-    background:rgba(34,197,94,.15);
-
-    color:#22C55E;
-
-}
-
-.category-transport{
-
-    background:rgba(249,115,22,.15);
-
-    color:#F97316;
-
-}
-
-.category-shopping{
-
-    background:rgba(168,85,247,.15);
-
-    color:#A855F7;
-
-}
-
-.category-entertainment{
-
-    background:rgba(236,72,153,.15);
-
-    color:#EC4899;
-
-}
-
-.category-bills{
-
-    background:rgba(239,68,68,.15);
-
-    color:#EF4444;
-
-}
-
-.category-education{
-
-    background:rgba(59,130,246,.15);
-
-    color:#3B82F6;
-
-}
+.category-food { background: rgba(34, 197, 94, .15); color: #22C55E; }
+.category-transport { background: rgba(249, 115, 22, .15); color: #F97316; }
+.category-shopping { background: rgba(168, 85, 247, .15); color: #A855F7; }
+.category-entertainment { background: rgba(236, 72, 153, .15); color: #EC4899; }
+.category-bills { background: rgba(239, 68, 68, .15); color: #EF4444; }
+.category-education { background: rgba(59, 130, 246, .15); color: #3B82F6; }
 
 /* ======================================================
    AMOUNT
 ====================================================== */
 
-.amount{
-
-    color:#22C55E;
-
-    font-size:16px;
-
-    font-weight:700;
-
+.amount {
+    color: #22C55E;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 /* ======================================================
    PAYMENT
 ====================================================== */
 
-.payment-method{
-
-    color:var(--text-secondary);
-
-    font-weight:500;
-
+.payment-method {
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 /* ======================================================
    ACTION BUTTONS
 ====================================================== */
 
-.action-buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:10px;
-
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .edit-btn,
-.delete-btn{
-
-    width:36px;
-
-    height:36px;
-
-    border:none;
-
-    border-radius:10px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    cursor:pointer;
-
-    transition:.25s;
-
+.delete-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .25s;
 }
 
-.edit-btn{
+.edit-btn { background: rgba(37, 99, 235, .12); color: #2563EB; }
+.edit-btn:hover { background: #2563EB; color: white; transform: translateY(-2px); }
 
-    background:rgba(37,99,235,.12);
-
-    color:#2563EB;
-
-}
-
-.edit-btn:hover{
-
-    background:#2563EB;
-
-    color:white;
-
-    transform:translateY(-2px);
-
-}
-
-.delete-btn{
-
-    background:rgba(239,68,68,.12);
-
-    color:#EF4444;
-
-}
-
-.delete-btn:hover{
-
-    background:#EF4444;
-
-    color:white;
-
-    transform:translateY(-2px);
-
-}
+.delete-btn { background: rgba(239, 68, 68, .12); color: #EF4444; }
+.delete-btn:hover { background: #EF4444; color: white; transform: translateY(-2px); }
 
 /* ======================================================
    REACT DATE PICKER
 ====================================================== */
 
-.react-datepicker{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:14px;
-
-    overflow:hidden;
-
-    box-shadow:0 15px 35px rgba(0,0,0,.15);
-
+.react-datepicker {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
 }
 
-.react-datepicker__header{
-
-    background:var(--background);
-
-    border-bottom:1px solid var(--border);
-
+.react-datepicker__header {
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
 }
 
-.react-datepicker__current-month{
-
-    color:var(--text-primary);
-
-    font-weight:600;
-
+.react-datepicker__current-month {
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
-.react-datepicker__day-name{
+.react-datepicker__day-name { color: var(--text-secondary); }
+.react-datepicker__day { color: var(--text-primary); }
 
-    color:var(--text-secondary);
-
+.react-datepicker__day:hover {
+    background: #2563EB;
+    color: white;
+    border-radius: 50%;
 }
 
-.react-datepicker__day{
-
-    color:var(--text-primary);
-
+.react-datepicker__day--selected {
+    background: #2563EB !important;
+    color: white;
 }
 
-.react-datepicker__day:hover{
-
-    background:#2563EB;
-
-    color:white;
-
-    border-radius:50%;
-
-}
-
-.react-datepicker__day--selected{
-
-    background:#2563EB !important;
-
-    color:white;
-
-}
-
-.react-datepicker__navigation-icon::before{
-
-    border-color:var(--text-primary);
-
+.react-datepicker__navigation-icon::before {
+    border-color: var(--text-primary);
 }
 
 /* ======================================================
    SCROLLBAR
 ====================================================== */
 
-.table-card::-webkit-scrollbar{
-
-    height:8px;
-
-}
-
-.table-card::-webkit-scrollbar-thumb{
-
-    background:#2563EB;
-
-    border-radius:20px;
-
-}
+.table-card::-webkit-scrollbar { height: 8px; }
+.table-card::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 20px; }
 
 /* ======================================================
    RESPONSIVE
 ====================================================== */
 
-@media(max-width:1100px){
-
-.filter-card{
-
-grid-template-columns:1fr 1fr;
-
+@media(max-width: 1100px) {
+    .filter-card {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
-.export-btn{
-
-grid-column:span 2;
-
-}
-
-}
-
-@media(max-width:768px){
-
-.history-page{
-
-padding:18px;
-
-}
-
-.history-header h1{
-
-font-size:28px;
-
-}
-
-.filter-card{
-
-grid-template-columns:1fr;
-
-}
-
-.export-btn{
-
-grid-column:span 1;
-
-}
-
-.history-top{
-
-flex-direction:column;
-
-align-items:flex-start;
-
-gap:10px;
-
-}
-
-.table-card{
-
-overflow-x:auto;
-
-}
-
-table{
-
-min-width:750px;
-
-}
-
+@media(max-width: 768px) {
+    .history-page {
+        padding: 18px;
+    }
+    .history-header h1 {
+        font-size: 28px;
+    }
+    .filter-card {
+        grid-template-columns: 1fr; /* Stack vertically on small screens */
+    }
+    .history-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .table-card {
+        overflow-x: auto;
+    }
+    table {
+        min-width: 750px;
+    }
 }
 
 /* ======================================================
    ANIMATION
 ====================================================== */
 
-.table-card{
-
-animation:fadeUp .4s ease;
-
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeUp{
-
-from{
-
-opacity:0;
-
-transform:translateY(20px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
 /* ===========================
    DELETE MODAL
 =========================== */
 
-.modal-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(15,23,42,.45);
-    backdrop-filter:blur(5px);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:999;
-    animation:fadeIn .25s ease;
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, .45);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    animation: fadeIn .25s ease;
 }
 
-.delete-modal{
-    width:420px;
-    background:#fff;
-    border-radius:22px;
-    padding:32px;
-    text-align:center;
-    box-shadow:0 25px 60px rgba(15,23,42,.25);
-    animation:popup .25s ease;
+.delete-modal {
+    width: 420px;
+    background: #fff;
+    border-radius: 22px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(15, 23, 42, .25);
+    animation: popup .25s ease;
 }
 
-.delete-icon{
-    width:72px;
-    height:72px;
-    border-radius:50%;
-    background:#fee2e2;
-    color:#ef4444;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin:0 auto 20px;
+.delete-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #ef4444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
 }
 
-.delete-modal h2{
-    font-size:28px;
-    color:#0f172a;
-    margin-bottom:14px;
+.delete-modal h2 {
+    font-size: 28px;
+    color: #0f172a;
+    margin-bottom: 14px;
 }
 
-.delete-modal p{
-    color:#475569;
-    line-height:1.7;
-    margin-bottom:10px;
+.delete-modal p {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 10px;
 }
 
-.delete-modal p strong{
-    color:#0f172a;
+.delete-modal p strong { color: #0f172a; }
+.delete-modal span { color: #ef4444; font-size: 14px; font-weight: 500; }
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
 }
 
-.delete-modal span{
-    color:#ef4444;
-    font-size:14px;
-    font-weight:500;
+.cancel-modal-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 12px;
+    background: #e2e8f0;
+    color: #334155;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
 }
+.cancel-modal-btn:hover { background: #cbd5e1; }
 
-.modal-buttons{
-    display:flex;
-    justify-content:center;
-    gap:16px;
-    margin-top:28px;
+.delete-modal-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 12px;
+    background: #ef4444;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .3s;
 }
+.delete-modal-btn:hover { background: #dc2626; transform: translateY(-2px); }
 
-.cancel-modal-btn{
-    padding:12px 28px;
-    border:none;
-    border-radius:12px;
-    background:#e2e8f0;
-    color:#334155;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
-}
-
-.cancel-modal-btn:hover{
-    background:#cbd5e1;
-}
-
-.delete-modal-btn{
-    padding:12px 28px;
-    border:none;
-    border-radius:12px;
-    background:#ef4444;
-    color:white;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
-}
-
-.delete-modal-btn:hover{
-    background:#dc2626;
-    transform:translateY(-2px);
-}
-
-@keyframes popup{
-    from{
-        transform:scale(.85);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-}
-
-@keyframes fadeIn{
-    from{
-        opacity:0;
-    }
-    to{
-        opacity:1;
-    }
-}
 /* ===========================
    Edit Expense Modal
 =========================== */
@@ -981,17 +549,7 @@ transform:translateY(0);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
-.edit-form textarea {
-  resize: none;
-  min-height: 90px;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 25px;
-}
+.edit-form textarea { resize: none; min-height: 90px; }
 
 .save-modal-btn {
   background: #2563eb;
@@ -1003,34 +561,14 @@ transform:translateY(0);
   font-weight: 600;
   transition: 0.25s;
 }
-
-.save-modal-btn:hover {
-  background: #1d4ed8;
-}
-
-.cancel-modal-btn {
-  background: #e5e7eb;
-  color: #374151;
-  border: none;
-  padding: 11px 22px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.25s;
-}
-
-.cancel-modal-btn:hover {
-  background: #d1d5db;
-}
+.save-modal-btn:hover { background: #1d4ed8; }
 
 @keyframes popup {
-  from {
-    transform: scale(0.92);
-    opacity: 0;
-  }
+    from { transform: scale(.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
 
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }

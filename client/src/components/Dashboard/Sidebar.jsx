@@ -9,7 +9,8 @@ import {
   User,
 } from "lucide-react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext"; // Ensure this path points to your AuthContext.jsx
 import "../../styles/Sidebar.css";
 
 const menuItems = [
@@ -51,75 +52,52 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <aside className="sidebar">
-
       {/* Logo */}
-
       <div className="sidebar-logo">
-
         <div className="logo-icon">💰</div>
-
         <div>
-
           <h2>SpendSense</h2>
-
           <p>AI Finance</p>
-
         </div>
-
       </div>
 
       {/* Navigation */}
-
       <nav className="sidebar-nav">
-
         {menuItems.map((item) => (
-
-          <NavLink
-            key={item.path}
-            to={item.path}
-          >
+          <NavLink key={item.path} to={item.path}>
             {item.icon}
-
             <span>{item.name}</span>
-
           </NavLink>
-
         ))}
-
       </nav>
 
       {/* User */}
-
       <div className="sidebar-user">
-
         <div className="user-avatar">
-
           <User size={20} />
-
         </div>
-
-        <div>
-
-          <h4>Sneha</h4>
-
-          <p>sneha@email.com</p>
-
+        <div style={{ overflow: "hidden" }}>
+          {/* Using optional chaining to prevent crashes if user data isn't loaded yet */}
+          <h4>{user?.name || "Guest User"}</h4>
+          <p>{user?.email || "Not logged in"}</p>
         </div>
-
       </div>
 
       {/* Logout */}
-
-      <button className="logout-btn">
-
+      <button className="logout-btn" onClick={handleLogout}>
         <LogOut size={18} />
-
         Logout
-
       </button>
-
     </aside>
   );
 };

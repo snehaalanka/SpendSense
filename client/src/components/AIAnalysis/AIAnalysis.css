@@ -287,10 +287,12 @@
 
 }
 
-.ai-score-header h4{
-
-    color:var(--text-primary);
-
+.ai-score-header h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Adds a nice little space between the shield and the text */
+    color: var(--text-primary);
+    margin: 0; /* Removes default heading margins that can cause shifting */
 }
 
 .ai-score-header span{

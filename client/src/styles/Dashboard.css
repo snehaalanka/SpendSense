@@ -1,174 +1,104 @@
-.dashboard{
-
-    display:flex;
-    flex-direction:column;
-
-    gap:22px;
-
-    width:100%;
-
-    min-height:100vh;
-
-    animation:fadeIn .35s ease;
-
+/* ==========================
+   Main Layout
+========================== */
+/* ==========================
+   Main Layout
+========================== */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    width: 100%;
+    min-height: 100vh;
+    
+    /* Adds the exact same spacing used on your Expense pages */
+    padding: 24px; 
+    box-sizing: border-box; 
+    
+    animation: fadeIn .35s ease;
 }
 
 /* ==========================
    Top Section
 ========================== */
-
-.dashboard-top{
-
-    display:flex;
-    flex-direction:column;
-
-    gap:18px;
-
-}
-
-/* ==========================
-   Summary Cards
-========================== */
-
-.summary-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(4,1fr);
-
-    gap:18px;
-
+.dashboard-top {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Standardized to 20px */
 }
 
 /* ==========================
    Charts
 ========================== */
-
-.charts-section{
-
-    margin-top:2px;
-
+.charts-section {
+    /* Removed margin-top: 2px; */
 }
 
 /* ==========================
    Bottom Section
 ========================== */
+.bottom-section {
+    display: grid;
+    grid-template-columns: 1.5fr .9fr;
+    gap: 20px; /* Standardized to 20px */
+}
 
-.bottom-section{
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    gap: 20px;
+    align-items: stretch;
+    /* Removed margin-top: 20px; */
+}
 
-    display:grid;
-
-    grid-template-columns:1.5fr .9fr;
-
-    gap:18px;
-
+.bottom-grid > * {
+    height: 100%;
 }
 
 /* ==========================
    Card
 ========================== */
-
-.dashboard-card{
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-
-    border-radius:18px;
-
-    box-shadow:var(--shadow);
-
-    transition:.25s;
-
+.dashboard-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    transition: .25s;
 }
 
-.bottom-grid{
-
-    display:grid;
-
-    grid-template-columns:2fr 1.2fr;
-
-    gap:20px;
-
-    align-items:stretch;
-
-    margin-top:20px;
-
-}
-
-.bottom-grid > *{
-
-    height:100%;
-
-}
-.dashboard-card:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:var(--shadow-hover);
-
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
 }
 
 /* ==========================
    Responsive
 ========================== */
-
-@media(max-width:1400px){
-
-.summary-grid{
-
-grid-template-columns:repeat(2,1fr);
-
+@media(max-width: 900px){
+    .bottom-section {
+        grid-template-columns: 1fr;
+    }
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-}
-
-@media(max-width:900px){
-
-.summary-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.bottom-section{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-@media(max-width:700px){
-
-.dashboard{
-
-gap:16px;
-
-}
-
+@media(max-width: 700px){
+    .dashboard {
+        gap: 16px;
+    }
 }
 
 /* ==========================
    Animation
 ========================== */
-
-@keyframes fadeIn{
-
-from{
-
-opacity:0;
-
-transform:translateY(10px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
