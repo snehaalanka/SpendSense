@@ -6,6 +6,7 @@ import App from "./App";
 
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { MonthProvider } from "./context/MonthContext";
 
 import "./styles/global.css";
 import "./styles/variables.css";
@@ -18,9 +19,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
       <ThemeProvider>
 
-        <App />
-        <ToastContainer />
-        
+        <MonthProvider>
+
+          <App />
+          <ToastContainer />
+
+        </MonthProvider>
+
       </ThemeProvider>
 
     </AuthProvider>

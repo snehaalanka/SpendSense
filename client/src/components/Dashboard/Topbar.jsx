@@ -1,4 +1,5 @@
 import "../../styles/Topbar.css";
+import MonthSelector from "./MonthSelector";
 import { useEffect, useState } from "react";
 
 import {
@@ -140,13 +141,7 @@ const Topbar = () => {
 
         </button>
 
-        <button className="month-btn">
-
-          June
-
-          <ChevronDown size={16}/>
-
-        </button>
+        <MonthSelector />
 
         <div className="profile">
 
