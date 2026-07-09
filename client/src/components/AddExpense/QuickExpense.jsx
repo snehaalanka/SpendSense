@@ -1,15 +1,73 @@
 import { useState } from "react";
-import {
-  Sparkles,
-  Pizza,
-  IndianRupee,
-  UtensilsCrossed,
-  CreditCard,
-} from "lucide-react";
+import { toast } from "react-toastify";
+
+import { Sparkles } from "lucide-react";
+
+import { extractExpense } from "../../api/aiApi";
+import { addExpense } from "../../api/expenseApi";
+
+import ExpenseResult from "./ExpenseResult";
 
 const QuickExpense = () => {
 
-  const [text,setText] = useState("");
+  const token = localStorage.getItem("token");
+
+  const [text, setText] = useState("");
+
+  const [result, setResult] = useState(null);
+
+  const [analyzing, setAnalyzing] = useState(false);
+
+  const [saving, setSaving] = useState(false);
+
+
+  const handleAnalyze = async () => {
+
+    if (!text.trim()) {
+      toast.error("Please describe your expense first.");
+      return;
+    }
+
+    try {
+
+      setAnalyzing(true);
+
+      const data = await extractExpense(text, token);
+
+      setResult(data);
+
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to analyze expense.");
+    } finally {
+      setAnalyzing(false);
+    }
+
+  };
+
+
+  const handleSave = async () => {
+
+    try {
+
+      setSaving(true);
+
+      await addExpense(result, token);
+
+      toast.success("Expense added successfully.");
+
+      setText("");
+      setResult(null);
+
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data?.message || "Failed to save expense.");
+    } finally {
+      setSaving(false);
+    }
+
+  };
+
 
   return (
 
@@ -33,89 +91,29 @@ const QuickExpense = () => {
 
         value={text}
 
-        onChange={(e)=>setText(e.target.value)}
+        onChange={(e) => setText(e.target.value)}
+
+        style={{ minHeight: "140px" }}
 
       />
 
-      <button className="analyze-btn">
+      <button
+        className="analyze-btn"
+        onClick={handleAnalyze}
+        disabled={analyzing}
+      >
 
         <Sparkles size={18}/>
 
-        Analyze Expense
+        {analyzing ? "Analyzing..." : "Analyze Expense"}
 
       </button>
 
-      <div className="ai-result">
-
-        <div className="ai-title">
-
-          <Sparkles size={18}/>
-
-          <span>AI Extracted Details</span>
-
-        </div>
-
-        <div className="result-grid">
-
-          <div className="result-card">
-
-            <Pizza size={18}/>
-
-            <div>
-
-              <small>Expense</small>
-
-              <h4>Pizza</h4>
-
-            </div>
-
-          </div>
-
-          <div className="result-card">
-
-            <IndianRupee size={18}/>
-
-            <div>
-
-              <small>Amount</small>
-
-              <h4>₹350</h4>
-
-            </div>
-
-          </div>
-
-          <div className="result-card">
-
-            <UtensilsCrossed size={18}/>
-
-            <div>
-
-              <small>Category</small>
-
-              <h4>Food</h4>
-
-            </div>
-
-          </div>
-
-          <div className="result-card">
-
-            <CreditCard size={18}/>
-
-            <div>
-
-              <small>Payment</small>
-
-              <h4>UPI</h4>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
+      <ExpenseResult
+        result={result}
+        onSave={handleSave}
+        saving={saving}
+      />
 
     </div>
 

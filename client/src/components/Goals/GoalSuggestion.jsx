@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Brain,
   CircleCheck,
@@ -5,7 +6,55 @@ import {
   CalendarDays,
 } from "lucide-react";
 
+import { getGoalsAdvisor } from "../../api/aiApi";
+
 const GoalSuggestion = () => {
+
+  const [advisor, setAdvisor] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    fetchAdvisor();
+  }, []);
+
+
+  const fetchAdvisor = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const token = localStorage.getItem("token");
+
+      const data = await getGoalsAdvisor(token);
+
+      setAdvisor(data);
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
+
+  if (loading || !advisor) {
+
+    return (
+      <div className="goal-suggestion">
+        <h3>
+          <Brain size={24} />
+          AI Savings Advisor
+        </h3>
+        <p>Loading your savings plan...</p>
+      </div>
+    );
+
+  }
+
   return (
     <div className="goal-suggestion">
 
@@ -18,9 +67,9 @@ const GoalSuggestion = () => {
       </h3>
 
       <p>
-        Based on your current savings pattern, here's the
-        recommended plan to reach your goal comfortably
-        before the target date.
+        Based on your current goals, here's the combined
+        savings plan to reach all of them comfortably
+        before their target dates.
       </p>
 
       {/* ======================
@@ -38,7 +87,7 @@ const GoalSuggestion = () => {
 
           <span>
 
-            Save <strong>₹230/day</strong>
+            Save <strong>₹{advisor.perDay}/day</strong>
 
           </span>
 
@@ -53,7 +102,7 @@ const GoalSuggestion = () => {
 
           <span>
 
-            Save <strong>₹1,600/week</strong>
+            Save <strong>₹{advisor.perWeek}/week</strong>
 
           </span>
 
@@ -68,7 +117,7 @@ const GoalSuggestion = () => {
 
           <span>
 
-            Save <strong>₹6,900/month</strong>
+            Save <strong>₹{advisor.perMonth}/month</strong>
 
           </span>
 
@@ -92,7 +141,7 @@ const GoalSuggestion = () => {
 
           <span>
 
-            88%
+            {advisor.successProbability}%
 
           </span>
 
@@ -100,7 +149,10 @@ const GoalSuggestion = () => {
 
         <div className="success-bar">
 
-          <div className="success-fill"></div>
+          <div
+            className="success-fill"
+            style={{ width: `${advisor.successProbability}%` }}
+          ></div>
 
         </div>
 

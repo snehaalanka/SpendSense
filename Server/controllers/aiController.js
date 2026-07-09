@@ -5,7 +5,6 @@ const User = require("../models/User");
 // builds accurate, non-AI stats from the user's real expense data
 
 const buildMonthlyStats = async (userId) => {
-  
 
   const now = new Date();
 
@@ -82,7 +81,6 @@ const buildMonthlyStats = async (userId) => {
 const getAnalysis = async (req, res) => {
 
   try {
-      res.set("Cache-Control", "no-store");
 
     const stats = await buildMonthlyStats(req.user.id);
 
@@ -150,4 +148,280 @@ const getReport = async (req, res) => {
 };
 
 
-module.exports = { getAnalysis, getReport };
+const extractExpense = async (req, res) => {
+
+  try {
+
+    const text = req.body.text;
+
+    if (!text) {
+      return res.status(400).json({ message: "text is required." });
+    }
+
+    const aiResponse = await fetch(`${process.env.AI_SERVICE_URL}/extract-expense`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+
+    if (!aiResponse.ok) {
+      throw new Error("ai-service request failed.");
+    }
+
+    const aiData = await aiResponse.json();
+
+    res.json(aiData);
+
+  } catch (error) {
+    console.error("extractExpense error:", error.message);
+    res.status(500).json({ message: "Failed to extract expense details." });
+  }
+
+};
+
+
+const transcribeAudio = async (req, res) => {
+
+  try {
+
+    if (!req.file) {
+      return res.status(400).json({ message: "audio file is required." });
+    }
+
+    const formData = new FormData();
+
+    const blob = new Blob([req.file.buffer], { type: req.file.mimetype });
+
+    formData.append("audio", blob, "recording.webm");
+
+    const aiResponse = await fetch(`${process.env.AI_SERVICE_URL}/transcribe`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!aiResponse.ok) {
+      throw new Error("ai-service request failed.");
+    }
+
+    const aiData = await aiResponse.json();
+
+    res.json(aiData);
+
+  } catch (error) {
+    console.error("transcribeAudio error:", error.message);
+    res.status(500).json({ message: "Failed to transcribe audio." });
+  }
+
+};
+
+
+const Goal = require("../models/Goal");
+
+
+// shared helper — computes real, deterministic numbers for one goal
+
+const buildGoalStats = (goal) => {
+
+  const target = goal.targetAmount;
+  const saved = goal.savedAmount;
+  const remaining = target - saved;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const targetDate = new Date(goal.targetDate);
+  const createdDate = new Date(goal.createdAt);
+
+  const daysRemaining = Math.max(
+    Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24)),
+    1
+  );
+
+  const totalDurationDays = Math.max(
+    Math.ceil((targetDate - createdDate) / (1000 * 60 * 60 * 24)),
+    1
+  );
+
+  const elapsedDays = Math.max(
+    Math.ceil((today - createdDate) / (1000 * 60 * 60 * 24)),
+    0
+  );
+
+  const progress = Math.min(Math.round((saved / target) * 100), 100);
+
+  const requiredPerDay = remaining / daysRemaining;
+
+  // compare how much of the goal's TIMELINE has passed vs how much of the MONEY has been saved
+  // this stays stable even right after a goal is created, instead of dividing by near-zero days
+
+  const timeProgress = Math.min(elapsedDays / totalDurationDays, 1);
+  const moneyProgress = Math.min(saved / target, 1);
+
+  // a small buffer keeps early-goal math from swinging to a hard 0 or 100
+
+  const paceScore = 0.5 + (moneyProgress - timeProgress);
+
+  const successProbability = Math.max(0, Math.min(100, Math.round(paceScore * 100)));
+
+  return {
+    goalName: goal.goalName,
+    target,
+    saved,
+    remaining,
+    progress,
+    daysRemaining,
+    requiredPerDay: Math.round(requiredPerDay),
+    successProbability,
+  };
+
+};
+
+
+const getGoalPrediction = async (req, res) => {
+
+  try {
+
+    const goal = await Goal.findOne({ _id: req.params.id, user: req.user.id });
+
+    if (!goal) {
+      return res.status(404).json({ message: "Goal not found." });
+    }
+
+    const stats = buildGoalStats(goal);
+
+    const aiResponse = await fetch(`${process.env.AI_SERVICE_URL}/goal-prediction`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ stats }),
+    });
+
+    if (!aiResponse.ok) {
+      throw new Error("ai-service request failed.");
+    }
+
+    const aiData = await aiResponse.json();
+
+    res.json({ prediction: aiData.prediction });
+
+  } catch (error) {
+    console.error("getGoalPrediction error:", error.message);
+    res.status(500).json({ message: "Failed to generate goal prediction." });
+  }
+
+};
+
+
+const getGoalsAdvisor = async (req, res) => {
+
+  try {
+
+    const goals = await Goal.find({ user: req.user.id });
+
+    const activeGoals = goals.filter((g) => g.savedAmount < g.targetAmount);
+
+    if (activeGoals.length === 0) {
+      return res.json({
+        perDay: 0,
+        perWeek: 0,
+        perMonth: 0,
+        successProbability: 100,
+      });
+    }
+
+    const statsList = activeGoals.map(buildGoalStats);
+
+    const perDay = statsList.reduce((sum, s) => sum + s.requiredPerDay, 0);
+
+    const avgSuccessProbability = Math.round(
+      statsList.reduce((sum, s) => sum + s.successProbability, 0) / statsList.length
+    );
+
+    res.json({
+      perDay: Math.round(perDay),
+      perWeek: Math.round(perDay * 7),
+      perMonth: Math.round(perDay * 30),
+      successProbability: avgSuccessProbability,
+    });
+
+  } catch (error) {
+    console.error("getGoalsAdvisor error:", error.message);
+    res.status(500).json({ message: "Failed to generate savings advice." });
+  }
+
+};
+
+
+const buildChatContext = async (userId) => {
+
+  const stats = await buildMonthlyStats(userId);
+
+  const goals = await Goal.find({ user: userId });
+
+  const goalsSummary = goals.map((g) => ({
+    goalName: g.goalName,
+    target: g.targetAmount,
+    saved: g.savedAmount,
+    progress: Math.round((g.savedAmount / g.targetAmount) * 100),
+  }));
+
+  const recentExpenses = await Expense.find({ user: userId })
+    .sort({ date: -1 })
+    .limit(15)
+    .select("title amount category date -_id");
+
+  return {
+    monthlyBudget: stats.budget,
+    totalSpentThisMonth: stats.totalSpent,
+    categoryTotalsThisMonth: stats.categoryTotals,
+    topCategoryThisMonth: stats.topCategory,
+    weekendSpendingPercent: stats.weekendPercent,
+    goals: goalsSummary,
+    recentExpenses,
+  };
+
+};
+
+
+const chatWithAI = async (req, res) => {
+
+  try {
+
+    const { message, history } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ message: "message is required." });
+    }
+
+    const context = await buildChatContext(req.user.id);
+
+    const aiResponse = await fetch(`${process.env.AI_SERVICE_URL}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message, history: history || [], context }),
+    });
+
+    if (!aiResponse.ok) {
+      throw new Error("ai-service request failed.");
+    }
+
+    const aiData = await aiResponse.json();
+
+    res.json({ reply: aiData.reply });
+
+  } catch (error) {
+    console.error("chatWithAI error:", error.message);
+    res.status(500).json({ message: "Failed to get a reply." });
+  }
+
+};
+
+
+module.exports = {
+  getAnalysis,
+  getReport,
+  extractExpense,
+  transcribeAudio,
+  getGoalPrediction,
+  getGoalsAdvisor,
+  chatWithAI,
+};

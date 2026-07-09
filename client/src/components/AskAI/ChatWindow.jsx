@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+
 import {
   Bot,
   Send,
   Sparkles,
 } from "lucide-react";
+
+import { sendChatMessage } from "../../api/aiApi";
 
 const suggestedQuestions = [
   "Where did I spend the most this month?",
@@ -14,7 +18,61 @@ const suggestedQuestions = [
 
 const ChatWindow = () => {
 
+  const token = localStorage.getItem("token");
+
   const [message, setMessage] = useState("");
+
+  const [messages, setMessages] = useState([]);
+
+  const [sending, setSending] = useState(false);
+
+
+  const handleSend = async (textOverride) => {
+
+    const textToSend = (textOverride ?? message).trim();
+
+    if (!textToSend) {
+      return;
+    }
+
+    const updatedMessages = [
+      ...messages,
+      { role: "user", content: textToSend },
+    ];
+
+    setMessages(updatedMessages);
+
+    setMessage("");
+
+    try {
+
+      setSending(true);
+
+      // history sent to backend excludes the message just added, backend appends it itself
+
+      const data = await sendChatMessage(textToSend, messages, token);
+
+      setMessages([
+        ...updatedMessages,
+        { role: "assistant", content: data.reply },
+      ]);
+
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to get a reply.");
+    } finally {
+      setSending(false);
+    }
+
+  };
+
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSend();
+    }
+  };
+
 
   return (
 
@@ -80,7 +138,9 @@ const ChatWindow = () => {
 
               className="question-pill"
 
-              onClick={() => setMessage(question)}
+              onClick={() => handleSend(question)}
+
+              disabled={sending}
 
             >
 
@@ -100,38 +160,27 @@ const ChatWindow = () => {
 
       <div className="chat-messages">
 
-        <div className="user-msg">
+        {messages.map((msg, index) => (
 
-          💬 How much did I spend on food this month?
+          <div
+            key={index}
+            className={msg.role === "user" ? "user-msg" : "ai-msg"}
+          >
 
-        </div>
+            {msg.role === "user" ? "💬 " : "🤖 "}
+            {msg.content}
 
-        <div className="ai-msg">
+          </div>
 
-          🤖 You spent
-          <strong> ₹1,728 </strong>
-          on food this month. That's about
-          <strong> 32% </strong>
-          of your total monthly expenses.
+        ))}
 
-        </div>
+        {sending && (
 
-        <div className="user-msg">
+          <div className="ai-msg">
+            🤖 Thinking...
+          </div>
 
-          💬 Can I save ₹5000 this month?
-
-        </div>
-
-        <div className="ai-msg">
-
-          🤖 Yes! Based on your spending
-          pattern, reducing food delivery
-          and weekend shopping could help
-          you save approximately
-          <strong> ₹5,200 </strong>
-          this month.
-
-        </div>
+        )}
 
       </div>
 
@@ -153,9 +202,17 @@ const ChatWindow = () => {
             setMessage(e.target.value)
           }
 
+          onKeyDown={handleKeyDown}
+
+          disabled={sending}
+
         />
 
-        <button className="send-btn">
+        <button
+          className="send-btn"
+          onClick={() => handleSend()}
+          disabled={sending}
+        >
 
           <Send size={20} />
 

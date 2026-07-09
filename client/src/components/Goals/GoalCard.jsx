@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Laptop,
   Brain,
   Wallet,
   PiggyBank,
@@ -8,15 +7,49 @@ import {
 } from "lucide-react";
 
 import { deleteGoal } from "../../api/goalApi";
+import { getGoalPrediction } from "../../api/aiApi";
 import AddMoneyModal from "./AddMoneyModel";
 
 const GoalCard = ({ goal, fetchGoals }) => {
+
   const [showMoneyModal, setShowMoneyModal] = useState(false);
+
+  const [prediction, setPrediction] = useState("");
+
+  const [loadingPrediction, setLoadingPrediction] = useState(true);
 
   const target = goal.targetAmount;
   const saved = goal.savedAmount;
   const remaining = target - saved;
   const progress = Math.round((saved / target) * 100);
+
+
+  useEffect(() => {
+    fetchPrediction();
+  }, []);
+
+
+  const fetchPrediction = async () => {
+
+    try {
+
+      setLoadingPrediction(true);
+
+      const token = localStorage.getItem("token");
+
+      const data = await getGoalPrediction(goal._id, token);
+
+      setPrediction(data.prediction);
+
+    } catch (err) {
+      console.log(err);
+      setPrediction("Unable to load prediction right now.");
+    } finally {
+      setLoadingPrediction(false);
+    }
+
+  };
+
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
@@ -143,7 +176,7 @@ const GoalCard = ({ goal, fetchGoals }) => {
               <h4>AI Prediction</h4>
 
               <p>
-                AI features coming soon...
+                {loadingPrediction ? "Thinking..." : prediction}
               </p>
             </div>
 
