@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
 
 import {
   User,
@@ -25,62 +26,50 @@ import {
 const SettingsList = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-  const token = localStorage.getItem("token");
+  const { token, updateUser, logout: authLogout } = useAuth();
 
-  // Component States
   const [showProfileForm, setShowProfileForm] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [notifications, setNotifications] = useState(true);
 
-  // Budget States
-const [budget, setBudget] = useState(0);
-
-const [showBudgetForm, setShowBudgetForm] = useState(false);
-
-const [tempBudget, setTempBudget] = useState(0);
+  const [budget, setBudget] = useState(0);
+  const [showBudgetForm, setShowBudgetForm] = useState(false);
+  const [tempBudget, setTempBudget] = useState(0);
 
   const [profile, setProfile] = useState({
-  name: "",
-  email: "",
-  phone: "",
-  occupation: "",
-});
+    name: "",
+    email: "",
+    phone: "",
+    occupation: "",
+  });
 
   const [password, setPassword] = useState({
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
+
   useEffect(() => {
+    fetchProfile();
+  }, []);
 
-  fetchProfile();
+  const fetchProfile = async () => {
+    try {
+      const user = await getUserProfile(token);
 
-}, []);
+      setProfile({
+        name: user.name,
+        email: user.email,
+        phone: user.phone || "",
+        occupation: user.occupation || "",
+      });
 
-const fetchProfile = async () => {
-
-  try {
-
-    const user = await getUserProfile(token);
-
-   setProfile({
-  name: user.name,
-  email: user.email,
-  phone: user.phone || "",
-  occupation: user.occupation || "",
-});
-
-setBudget(user.monthlyBudget || 0);
-setTempBudget(user.monthlyBudget || 0);
-
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
+      setBudget(user.monthlyBudget || 0);
+      setTempBudget(user.monthlyBudget || 0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleProfileChange = (e) => {
     setProfile({
@@ -96,126 +85,94 @@ setTempBudget(user.monthlyBudget || 0);
     });
   };
 
-const saveProfile = async () => {
+  const saveProfile = async () => {
+    try {
+      const response = await updateProfile(
+        {
+          name: profile.name,
+          phone: profile.phone,
+          occupation: profile.occupation,
+          monthlyBudget: budget,
+        },
+        token
+      );
 
-  try {
+      setProfile({
+        name: response.user.name,
+        email: response.user.email,
+        phone: response.user.phone || "",
+        occupation: response.user.occupation || "",
+      });
 
-    const response = await updateProfile(
-      {
-        name: profile.name,
-        phone: profile.phone,
-        occupation: profile.occupation,
-        monthlyBudget: budget,
-      },
-      token
-    );
+      setBudget(response.user.monthlyBudget);
+      setTempBudget(response.user.monthlyBudget);
 
-  setProfile({
-  name: user.name,
-  email: user.email,
-  phone: user.phone || "",
-  occupation: user.occupation || "",
-});
+      updateUser(response.user);
 
-    setBudget(response.user.monthlyBudget);
-    setTempBudget(response.user.monthlyBudget);
+      toast.success("Profile Updated Successfully");
+      setShowProfileForm(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update profile");
+    }
+  };
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(response.user)
-    );
-
-    toast.success("Profile Updated Successfully");
-
-    setShowProfileForm(false);
-
-  } catch (error) {
-
-    console.log(error);
-
-    toast.error("Failed to update profile");
-
-  }
-
-};
   const updatePassword = async () => {
+    if (password.newPassword !== password.confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-  if (password.newPassword !== password.confirmPassword) {
-    toast.error("Passwords do not match");
-    return;
-  }
+    try {
+      const response = await changePassword(
+        {
+          currentPassword: password.currentPassword,
+          newPassword: password.newPassword,
+        },
+        token
+      );
 
-  try {
+      toast.success(response.message);
 
-    const response = await changePassword(
-      {
-        currentPassword: password.currentPassword,
-        newPassword: password.newPassword,
-      },
-      token
-    );
+      setPassword({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
 
-    toast.success(response.message);
+      setShowPasswordForm(false);
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error.response?.data?.message || "Failed to update password"
+      );
+    }
+  };
 
-    setPassword({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+  const handleSaveBudget = async () => {
+    try {
+      const finalBudget = tempBudget === "" ? 0 : Number(tempBudget);
 
-    setShowPasswordForm(false);
+      const response = await updateProfile(
+        { monthlyBudget: finalBudget },
+        token
+      );
 
-  } catch (error) {
+      setBudget(response.user.monthlyBudget);
+      setTempBudget(response.user.monthlyBudget);
 
-    console.log(error);
+      updateUser(response.user);
 
-    toast.error(
-      error.response?.data?.message || "Failed to update password"
-    );
-
-  }
-
-};
-
-const handleSaveBudget = async () => {
-
-  try {
-
-    const finalBudget =
-      tempBudget === "" ? 0 : Number(tempBudget);
-
-    const response = await updateProfile(
-      {
-        monthlyBudget: finalBudget,
-      },
-      token
-    );
-
-    setBudget(response.user.monthlyBudget);
-
-    setTempBudget(response.user.monthlyBudget);
-
-    localStorage.setItem(
-      "user",
-      JSON.stringify(response.user)
-    );
-
-    setShowBudgetForm(false);
-
-    toast.success("Monthly Budget Updated Successfully");
-
-  } catch (error) {
-
-    console.log(error);
-
-    toast.error("Failed to update budget");
-
-  }
-
-};
+      setShowBudgetForm(false);
+      toast.success("Monthly Budget Updated Successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update budget");
+    }
+  };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    authLogout();
     navigate("/login");
   };
 
@@ -555,3 +512,5 @@ const handleSaveBudget = async () => {
 };
 
 export default SettingsList;
+
+

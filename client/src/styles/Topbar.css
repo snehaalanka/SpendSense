@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 6px;
+    margin-bottom: 28px; /* Increased to push dashboard content down slightly */
     width: 100%;
 }
 
@@ -165,9 +165,13 @@
    RESPONSIVE TOPBAR (MOBILE)
 ========================================= */
 @media (max-width: 768px) {
+    @media (max-width: 768px) {
     .topbar {
-        align-items: center; /* Vertically centers everything */
+        align-items: center; 
+        margin-bottom: 20px; /* Added proper spacing for mobile */
     }
+    
+    /* ... keep the rest of your existing mobile CSS exactly as it is ... */
 
     .topbar-left {
         flex-direction: row; 

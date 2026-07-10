@@ -117,20 +117,28 @@ padding:16px;
 }
 
 }
+/* ===========================
+   STANDALONE MOBILE HEADER
+=========================== */
+.standalone-mobile-header {
+    display: none; /* Always hidden on laptops */
+}
 
-/* TABLETS AND MOBILE */
 @media (max-width: 768px) {
-    .main-layout {
-        /* If your layout originally used CSS Grid (e.g., grid-template-columns: 270px 1fr), 
-           this changes it to 1 column so the dashboard fills the whole screen */
-        grid-template-columns: 1fr; 
+    .standalone-mobile-header {
         display: flex;
-        flex-direction: column;
-    }
-
-    .main-content {
-        /* Removes any left margin or padding that was making room for the desktop sidebar */
-        margin-left: 0; 
+        padding: 20px 20px 0 20px; /* Aligns perfectly with your page padding */
+        background: var(--background);
         width: 100%;
+    }
+    
+    .standalone-mobile-header .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--text-primary);
+        cursor: pointer;
+        padding: 4px;
+        margin-left: -4px; /* Pulls it flush with the left edge */
     }
 }

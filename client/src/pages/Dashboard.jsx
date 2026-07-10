@@ -11,8 +11,9 @@ const Dashboard = () => {
     <div className="dashboard">
 
       <div className="dashboard-top">
+         
+         <Topbar />
 
-        <Topbar />
 
         <SummaryCards />
 
