@@ -5,13 +5,12 @@ import "../styles/MainLayout.css";
 const MainLayout = () => {
   return (
     <div className="layout">
-
       <Sidebar />
-
-      <main className="page-content">
-        <Outlet />
-      </main>
-
+      <div className="main-content">
+        <main className="page-content">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };

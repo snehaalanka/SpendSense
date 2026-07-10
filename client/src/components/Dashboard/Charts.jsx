@@ -44,8 +44,8 @@ const Charts = () => {
   const fetchWeeklySpending = async () => {
     try {
       const data = await getWeeklySpending(token);
-      
       const weekData = days.map((day) => ({ day, amount: 0 }));
+      
       data.forEach((item) => {
         weekData[item._id - 1].amount = item.total;
       });
@@ -63,7 +63,6 @@ const Charts = () => {
         selectedMonth.year,
         selectedMonth.month
       );
-      
       const total = data.reduce((sum, item) => sum + item.total, 0);
       
       const formatted = data.map((item, index) => ({
@@ -101,14 +100,11 @@ const Charts = () => {
         </div>
         
         <div className="chart-body">
-          
-          {/* INCREASED: Container from 190px to 240px */}
           <div style={{ width: "240px", height: "240px", flexShrink: 0 }}>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={categories}
-                  /* INCREASED: Radii to make the pie physically larger */
                   innerRadius={75}
                   outerRadius={115}
                   paddingAngle={4}
@@ -150,20 +146,21 @@ const Charts = () => {
         </div>
         <div style={{ width: "100%", height: "240px", marginTop: "10px" }}>
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={weekly} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <BarChart data={weekly} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
               <XAxis 
                 dataKey="day" 
                 axisLine={false} 
                 tickLine={false} 
                 tick={{ fill: "#64748B", fontSize: 13 }} 
                 dy={10}
+                interval={0}
               />
               <Tooltip content={<CustomBarTooltip />} cursor={{ fill: "rgba(37, 99, 235, 0.05)" }} />
               <Bar 
                 dataKey="amount" 
                 fill="#2563EB" 
                 radius={[6, 6, 0, 0]} 
-                barSize={36} /* Slightly thickened the bars to match the new bold pie chart */
+                barSize={36} 
                 animationDuration={1500}
               />
             </BarChart>

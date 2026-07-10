@@ -117,3 +117,20 @@ padding:16px;
 }
 
 }
+
+/* TABLETS AND MOBILE */
+@media (max-width: 768px) {
+    .main-layout {
+        /* If your layout originally used CSS Grid (e.g., grid-template-columns: 270px 1fr), 
+           this changes it to 1 column so the dashboard fills the whole screen */
+        grid-template-columns: 1fr; 
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-content {
+        /* Removes any left margin or padding that was making room for the desktop sidebar */
+        margin-left: 0; 
+        width: 100%;
+    }
+}

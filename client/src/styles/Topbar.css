@@ -3,18 +3,37 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 6px;
+    width: 100%;
 }
 
 /* LEFT */
+.topbar-left {
+    display: flex;
+    flex-direction: column;
+}
+
 .topbar-left h1 {
     font-size: 30px;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .topbar-left span {
     color: var(--primary);
+    margin-left: 6px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 4px;
+    margin-right: 12px;
 }
 
 .ai-tip {
@@ -26,6 +45,7 @@
     border-radius: 14px;
     font-size: 14px;
     color: #2563EB;
+    width: fit-content;
 }
 
 .ai-tip strong {
@@ -39,7 +59,6 @@
     gap: 12px;
 }
 
-/* Icons */
 .top-icon {
     position: relative;
     width: 44px;
@@ -53,6 +72,7 @@
     color: var(--text-primary);
     box-shadow: var(--shadow);
     transition: .25s;
+    cursor: pointer;
 }
 
 .top-icon:hover {
@@ -61,7 +81,6 @@
     color: white;
 }
 
-/* Month */
 .month-btn {
     display: flex;
     align-items: center;
@@ -74,9 +93,9 @@
     font-size: 14px;
     font-weight: 600;
     color: var(--text-primary);
+    cursor: pointer;
 }
 
-/* Profile */
 .profile img {
     width: 46px;
     height: 46px;
@@ -91,13 +110,11 @@
     transform: scale(1.05);
 }
 
-/* DARK */
 [data-theme="dark"] .ai-tip {
     background: #1E3A5F;
     color: #93C5FD;
 }
 
-/* Month Selector */
 .month-selector {
     position: relative;
 }
@@ -142,4 +159,42 @@
 .month-list-item:disabled {
     opacity: 0.35;
     cursor: not-allowed;
+}
+
+/* =========================================
+   RESPONSIVE TOPBAR (MOBILE)
+========================================= */
+@media (max-width: 768px) {
+    .topbar {
+        align-items: center; /* Vertically centers everything */
+    }
+
+    .topbar-left {
+        flex-direction: row; 
+        align-items: center; 
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        margin-top: 0; 
+    }
+    
+    /* This completely hides the greeting text on all phones */
+    .topbar-left h1 {
+        display: none; 
+    }
+    
+    .ai-tip {
+        display: none; 
+    }
+    
+    .month-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .top-icon, .profile img {
+        width: 38px;
+        height: 38px;
+    }
 }
