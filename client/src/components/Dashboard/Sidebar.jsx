@@ -64,12 +64,14 @@ const Sidebar = () => {
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
-        <div className="logo-icon">💰</div>
-        <div>
-          <h2>SpendSense</h2>
-          <p>AI Finance</p>
-        </div>
-      </div>
+  <div className="logo-icon">
+    <img src="/sidebar-icon.png" alt="SpendSense logo" style={{ width: 32, height: 32 }} />
+  </div>
+  <div>
+    <h2>SpendSense</h2>
+    <p>AI Finance</p>
+  </div>
+</div>
 
       {/* Navigation */}
       <nav className="sidebar-nav">

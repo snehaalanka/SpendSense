@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import {
@@ -26,6 +26,13 @@ const ChatWindow = () => {
 
   const [sending, setSending] = useState(false);
 
+  const bottomRef = useRef(null);
+
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, sending]);
+
 
   const handleSend = async (textOverride) => {
 
@@ -47,8 +54,6 @@ const ChatWindow = () => {
     try {
 
       setSending(true);
-
-      // history sent to backend excludes the message just added, backend appends it itself
 
       const data = await sendChatMessage(textToSend, messages, token);
 
@@ -74,61 +79,58 @@ const ChatWindow = () => {
   };
 
 
-  return (
+  const hasMessages = messages.length > 0;
 
-    <div className="chat-card">
 
-      {/* ==========================
-          AI INTRO
-      ========================== */}
+  // ==========================
+  // EMPTY STATE - ChatGPT-style hero
+  // ==========================
 
-      <div className="ai-intro">
+  if (!hasMessages) {
 
-        <div className="ai-avatar">
+    return (
 
-          <Bot size={34} />
+      <div className="chat-card chat-empty">
 
+        <div className="chat-empty-icon">
+          <Bot size={30} />
         </div>
 
-        <div className="ai-info">
+        <h1 className="chat-empty-title">Ask AI</h1>
 
-          <h2>
+        <p className="chat-empty-subtitle">Ask anything about your finances</p>
 
-            SpendSense AI
+        <div className="chat-empty-input">
 
-          </h2>
+          <input
 
-          <p>
+            type="text"
 
-            I'm your personal financial assistant.
-            Ask me anything about your expenses,
-            savings goals, monthly budgets or
-            spending habits.
+            placeholder="Ask your financial assistant..."
 
-          </p>
+            value={message}
 
-        </div>
+            onChange={(e) => setMessage(e.target.value)}
 
-      </div>
+            onKeyDown={handleKeyDown}
 
-      {/* ==========================
-          Suggested Questions
-      ========================== */}
+            disabled={sending}
 
-      <div className="suggested-section">
-
-        <h3>
-
-          <Sparkles
-            size={18}
-            style={{ marginRight: 8 }}
           />
 
-          Suggested Questions
+          <button
+            className="send-btn"
+            onClick={() => handleSend()}
+            disabled={sending}
+          >
 
-        </h3>
+            <Send size={20} />
 
-        <div className="question-pills">
+          </button>
+
+        </div>
+
+        <div className="chat-empty-pills">
 
           {suggestedQuestions.map((question, index) => (
 
@@ -144,6 +146,8 @@ const ChatWindow = () => {
 
             >
 
+              <Sparkles size={14} style={{ marginRight: 6 }} />
+
               {question}
 
             </button>
@@ -154,9 +158,30 @@ const ChatWindow = () => {
 
       </div>
 
-      {/* ==========================
-          CHAT
-      ========================== */}
+    );
+
+  }
+
+
+  // ==========================
+  // CHAT THREAD - once conversation has started
+  // ==========================
+
+  return (
+
+    <div className="chat-card">
+
+      <div className="ai-intro">
+
+        <div className="ai-avatar">
+          <Bot size={26} />
+        </div>
+
+        <div className="ai-info">
+          <h2>SpendSense AI</h2>
+        </div>
+
+      </div>
 
       <div className="chat-messages">
 
@@ -182,11 +207,9 @@ const ChatWindow = () => {
 
         )}
 
-      </div>
+        <div ref={bottomRef} />
 
-      {/* ==========================
-          INPUT
-      ========================== */}
+      </div>
 
       <div className="chat-input">
 
@@ -198,9 +221,7 @@ const ChatWindow = () => {
 
           value={message}
 
-          onChange={(e) =>
-            setMessage(e.target.value)
-          }
+          onChange={(e) => setMessage(e.target.value)}
 
           onKeyDown={handleKeyDown}
 
