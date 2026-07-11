@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/auth";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
+const API = `${BASE_URL}/api/auth`;
 
 export const getUserProfile = async (token) => {
 
