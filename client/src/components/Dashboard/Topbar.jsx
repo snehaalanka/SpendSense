@@ -1,19 +1,16 @@
 import "../../styles/Topbar.css";
 import MonthSelector from "./MonthSelector";
 import { useEffect, useState } from "react";
-import { Moon, Sun, Sparkles, Menu } from "lucide-react"; // Added Menu
+import { Moon, Sun, Sparkles, Menu } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
 import { getDashboardInsight } from "../../api/aiApi";
 
 const Topbar = () => {
-  const [user, setUser] = useState(null);
   const [insight, setInsight] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-    }
     fetchInsight();
   }, []);
 
@@ -34,7 +31,6 @@ const Topbar = () => {
   if (hour < 12) greeting = "Good Morning";
   else if (hour < 18) greeting = "Good Afternoon";
 
-  // Dispatches a global event to toggle the mobile sidebar drawer
   const handleOpenMobileMenu = () => {
     window.dispatchEvent(new CustomEvent("toggle-mobile-menu"));
   };
@@ -42,7 +38,6 @@ const Topbar = () => {
   return (
     <div className="topbar">
       <div className="topbar-left">
-        {/* Mobile Hamburger Button */}
         <button className="mobile-menu-btn" onClick={handleOpenMobileMenu}>
           <Menu size={24} />
         </button>
@@ -83,7 +78,7 @@ const Topbar = () => {
         <MonthSelector />
 
         <div className="profile">
-          <img src="https://i.pravatar.cc/150?img=32" alt="Profile" />
+          {user?.name?.charAt(0).toUpperCase()}
         </div>
       </div>
     </div>

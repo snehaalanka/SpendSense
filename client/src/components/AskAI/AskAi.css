@@ -1,3 +1,4 @@
+body { background: red !important; }
 /* ======================================================
    PAGE
 ====================================================== */
@@ -6,7 +7,7 @@
 }
 
 /* ======================================================
-   CHAT CARD - no box chrome, blends into the page
+   CHAT CARD
 ====================================================== */
 .chat-card{
     background:transparent;
@@ -19,7 +20,7 @@
 }
 
 /* ======================================================
-   EMPTY STATE - ChatGPT-style hero
+   EMPTY STATE
 ====================================================== */
 .chat-empty{
     display:flex;
@@ -44,7 +45,7 @@
 }
 
 .chat-empty-title{
-    font-size:40px;
+    font-size:20px;
     font-weight:700;
     color:var(--text-primary);
     margin-bottom:8px;
@@ -57,43 +58,41 @@
     margin-bottom:36px;
 }
 
+/* --- PILL WRAPPER: input + button live INSIDE this, as flex children --- */
 .chat-empty-input{
-    position:relative;
+    display:flex;
+    align-items:center;
     width:100%;
     max-width:620px;
-    margin-bottom:32px;
-}
-
-.chat-empty-input input{
-    width:100%;
     height:56px;
-    padding:0 66px 0 22px;
+    padding:0 6px 0 22px;
     border:1px solid var(--border);
     border-radius:999px;
     background:var(--background);
-    color:var(--text-primary);
-    outline:none;
-    font-size:15px;
+    margin-bottom:32px;
     transition:.25s;
     box-sizing:border-box;
-    display:block;
 }
 
-.chat-empty-input input::placeholder{
-    color:var(--text-secondary);
-}
-
-.chat-empty-input input:focus{
+.chat-empty-input:focus-within{
     border-color:#2563EB;
     box-shadow:0 0 0 4px rgba(37,99,235,.10);
 }
 
-.chat-empty-input .send-btn{
-    position:absolute;
-    right:8px;
-    top:50%;
-    transform:translateY(-50%);
-    margin:0;
+.chat-empty-input input{
+    flex:1;
+    min-width:0;
+    height:100%;
+    border:none;
+    background:transparent;
+    outline:none;
+    color:var(--text-primary);
+    font-size:15px;
+    padding:0 12px 0 0;
+}
+
+.chat-empty-input input::placeholder{
+    color:var(--text-secondary);
 }
 
 .chat-empty-pills{
@@ -222,49 +221,44 @@
 }
 
 /* ======================================================
-   CHAT INPUT
+   CHAT INPUT (active thread) — same pill approach
 ====================================================== */
 .chat-input{
-    position:relative;
-    padding:18px 20px;
-    border-top:1px solid var(--border);
-    background:transparent;
-}
-
-.chat-input input{
-    width:100%;
+    display:flex;
+    align-items:center;
+    margin:18px 20px;
+    padding:0 6px 0 16px;
     height:50px;
-    padding:0 58px 0 16px;
     border:1px solid var(--border);
     border-radius:14px;
     background:var(--background);
-    color:var(--text-primary);
-    outline:none;
-    font-size:14px;
     transition:.25s;
     box-sizing:border-box;
-    display:block;
+}
+
+.chat-input:focus-within{
+    border-color:#2563EB;
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+}
+
+.chat-input input{
+    flex:1;
+    min-width:0;
+    height:100%;
+    border:none;
+    background:transparent;
+    outline:none;
+    color:var(--text-primary);
+    font-size:14px;
+    padding:0 12px 0 0;
 }
 
 .chat-input input::placeholder{
     color:var(--text-secondary);
 }
 
-.chat-input input:focus{
-    border-color:#2563EB;
-    box-shadow:0 0 0 4px rgba(37,99,235,.10);
-}
-
-.chat-input .send-btn{
-    position:absolute;
-    right:28px;
-    top:50%;
-    transform:translateY(-50%);
-    margin:0;
-}
-
 /* ======================================================
-   SEND BUTTON
+   SEND BUTTON — now a normal flex child, no positioning needed
 ====================================================== */
 .send-btn{
     width:40px;
@@ -283,7 +277,7 @@
 }
 
 .send-btn:hover{
-    transform:translateY(-50%) scale(1.05);
+    transform:scale(1.05);
     box-shadow:0 8px 16px rgba(37,99,235,.30);
 }
 
@@ -329,6 +323,8 @@
     .ai-intro{
         padding:16px 18px 8px;
         gap:0;
+        flex-direction:column;
+        align-items:flex-start;
     }
 
     .ai-info h2{
@@ -354,17 +350,9 @@
         width:100%;
     }
 
-    .ai-intro{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
     .chat-input{
-        padding:16px;
-    }
-
-    .chat-input .send-btn{
-        right:24px;
+        margin:16px;
+        height:46px;
     }
 
     .send-btn{
@@ -372,21 +360,14 @@
         height:36px;
     }
 
-    .chat-empty-input input{
+    .chat-empty-input{
         height:52px;
-        padding-right:60px;
-    }
-
-    .chat-input input{
-        height:46px;
-        padding-right:52px;
     }
 
     .user-msg,
     .ai-msg{
         max-width:90%;
     }
-
 }
 
 @media(max-width:480px){
@@ -406,7 +387,6 @@
 
     .chat-empty-input input{
         font-size:14px;
-        padding-right:56px;
     }
 
     .send-btn{

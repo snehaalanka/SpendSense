@@ -84,3 +84,12 @@
         font-size: 16px;
     }
 }
+@media(max-width: 400px) {
+    .features h2 {
+        font-size: 27px;
+    }
+    .section-tag {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}

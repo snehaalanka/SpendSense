@@ -248,3 +248,21 @@
         transform: translateX(0);
     }
 }
+@media(max-width: 400px) {
+    .hero-tag {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    .hero h1 {
+        font-size: 32px;
+    }
+    .hero-description {
+        font-size: 14px;
+    }
+    .stat-card {
+        padding: 14px 16px;
+    }
+    .stat-card h3 {
+        font-size: 17px;
+    }
+}

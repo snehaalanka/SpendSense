@@ -1,7 +1,52 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
 const path = require("path");
+
+const verifyEmailDeliverability = async (email) => {
+  try {
+    console.log("DEBUG - Key being used:", process.env.ABSTRACT_EMAIL_API_KEY);
+    const response = await axios.get(
+      "https://emailvalidation.abstractapi.com/v1/",
+      {
+        params: {
+          api_key: process.env.ABSTRACT_EMAIL_API_KEY,
+          email,
+        },
+        timeout: 6000,
+      }
+    );
+
+    console.log("Abstract API raw response:", JSON.stringify(response.data, null, 2));
+
+    const data = response.data;
+
+    // Abstract API returns deliverability as one of:
+    // "DELIVERABLE", "UNDELIVERABLE", "UNKNOWN", "RISKY"
+    const isDeliverable =
+      data.deliverability === "DELIVERABLE" ||
+      data.deliverability === "UNKNOWN"; // give benefit of doubt on UNKNOWN
+
+    const isDisposable = data.is_disposable_email?.value === true;
+
+    return {
+      valid: isDeliverable && !isDisposable,
+      reason: isDisposable
+        ? "Disposable/temporary email addresses are not allowed."
+        : "This email address does not appear to exist. Please check and try again.",
+    };
+  } catch (error) {
+    console.error("Email verification API error:", error.message);
+    if (error.response) {
+      console.error("Email verification API error response:", JSON.stringify(error.response.data, null, 2));
+    }
+    // If the API itself fails (quota exceeded, network issue), don't block
+    // registration entirely — fail open so a third-party outage doesn't
+    // break your signup flow.
+    return { valid: true, reason: null };
+  }
+};
 
 const registerUser = async (req, res) => {
   try {
@@ -62,6 +107,14 @@ const registerUser = async (req, res) => {
       });
     }
 
+    const emailCheck = await verifyEmailDeliverability(trimmedEmail);
+
+    if (!emailCheck.valid) {
+      return res.status(400).json({
+        message: emailCheck.reason,
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
@@ -84,6 +137,7 @@ const registerUser = async (req, res) => {
     });
   }
 };
+
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;

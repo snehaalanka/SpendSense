@@ -93,26 +93,27 @@ const VoiceExpense = () => {
 
 
   const handleSave = async () => {
+  try {
+    setSaving(true);
 
-    try {
+    const response = await addExpense(result, token);
 
-      setSaving(true);
-
-      await addExpense(result, token);
-
-      toast.success("Expense added successfully.");
-
-      setTranscript("");
-      setResult(null);
-
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response?.data?.message || "Failed to save expense.");
-    } finally {
-      setSaving(false);
+    // Intercept backend budget checks
+    if (response && response.budgetWarning) {
+      toast.warning(response.warningMessage);
     }
 
-  };
+    toast.success("Expense added successfully.");
+    setTranscript("");
+    setResult(null);
+
+  } catch (err) {
+    console.log(err);
+    toast.error(err.response?.data?.message || "Failed to save expense.");
+  } finally {
+    setSaving(false);
+  }
+};
 
 
   return (

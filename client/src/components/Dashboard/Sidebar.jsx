@@ -62,15 +62,13 @@ const Sidebar = () => {
 
       <aside className={`sidebar ${isMobileOpen ? "mobile-open" : ""}`}>
         <div className="sidebar-logo">
-          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-            <div className="logo-icon">
-              <img src="/sidebar-icon.png" alt="SpendSense logo" style={{ width: 32, height: 32 }} />
-            </div>
-            <div>
-              <h2>SpendSense</h2>
-              <p>AI Finance</p>
-            </div>
-          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "14px", paddingLeft: "8px" }}>
+  <img src="logo.png" alt="SpendSense logo" style={{ width: 40, height: 40 }} />
+  <div>
+    <h2>SpendSense</h2>
+    <p>AI Finance</p>
+  </div>
+</div>
 
           <button className="mobile-close-btn" onClick={handleCloseMenu}>
             <X size={22} />

@@ -5,7 +5,7 @@
 .settings-page{
     max-width:1100px;
     margin:auto;
-    padding:24px;
+    padding:30px;
 }
 
 .settings-header{
@@ -13,7 +13,7 @@
 }
 
 .settings-header h1{
-    font-size:32px;
+    font-size:26px;
     font-weight:700;
     color:var(--text-primary);
     margin-bottom:6px;
@@ -98,6 +98,10 @@
     font-size:14px;
     color:var(--text-secondary);
     text-align: left;
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .edit-profile-btn{
@@ -140,7 +144,6 @@
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:18px;
-    /* Force overrides in case global CSS is injecting a white background here */
     background: transparent !important;
     padding: 0 !important;
     border-radius: 0 !important;
@@ -185,7 +188,6 @@
     margin-top:6px;
 }
 
-/* Updated cancel button to blend into dark mode perfectly */
 .cancel-btn{
     height:42px;
     padding:0 18px;
@@ -512,7 +514,20 @@
     .logout-btn{
         width:100%;
     }
+    .profile-info p{
+        max-width: 200px;
+    }
 }
+
+@media(max-width:480px){
+    .profile-info p{
+        max-width: 150px;
+    }
+    .profile-info h2{
+        font-size:20px;
+    }
+}
+
 /* ======================================================
    BUDGET CARD
 ====================================================== */

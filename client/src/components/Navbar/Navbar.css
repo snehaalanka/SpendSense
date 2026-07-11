@@ -7,7 +7,7 @@
     top: 0;
     z-index: 1000;
     backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px); /* Safari support */
+    -webkit-backdrop-filter: blur(18px);
     background: rgba(255, 255, 255, 0.75);
     border-bottom: 1px solid var(--border);
     transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -17,41 +17,30 @@
     background: rgba(15, 23, 42, 0.75);
 }
 
-/* ===================================================== */
-
-
 .navbar-container {
-    width: 95%; /* Updated to match Hero */
-    max-width: 1400px; /* Updated to match Hero */
-    height: 72px; 
+    width: 95%;
+    max-width: 1400px;
+    height: 72px;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-
-
-/* ===================================================== */
-
 .logo {
     text-decoration: none !important;
     font-size: 24px !important;
     font-weight: 700 !important;
-    color: #2563EB !important;
+    color: #2466ea !important;
     letter-spacing: -0.5px !important;
-    
-    /* BULLETPROOF ALIGNMENT FIX */
     display: flex !important;
     align-items: center !important;
-    align-self: center ; /* Forces vertical centering within the navbar */
-    height: max-content !important; 
+    align-self: center;
+    height: max-content !important;
     margin: 0 !important;
     padding: 0 !important;
     line-height: 1 !important;
 }
-
-/* ===================================================== */
 
 .nav-links {
     display: flex;
@@ -62,7 +51,7 @@
 .nav-links a {
     text-decoration: none;
     color: var(--text-primary);
-    font-size: 15px; 
+    font-size: 15px;
     font-weight: 500;
     transition: color 0.2s ease;
     display: flex;
@@ -73,20 +62,16 @@
     color: #2563EB;
 }
 
-/* ===================================================== */
-
 .nav-actions {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-/* ===================================================== */
-
 .login-link {
     text-decoration: none;
     color: var(--text-primary);
-    font-size: 15px; 
+    font-size: 15px;
     font-weight: 600;
     transition: color 0.2s ease;
     display: flex;
@@ -97,10 +82,8 @@
     color: #2563EB;
 }
 
-/* ===================================================== */
-
 .theme-btn {
-    width: 40px; 
+    width: 40px;
     height: 40px;
     border: none;
     border-radius: 10px;
@@ -112,6 +95,7 @@
     align-items: center;
     cursor: pointer;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .theme-btn:hover {
@@ -120,7 +104,9 @@
     transform: translateY(-1px);
 }
 
-/* ===================================================== */
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media (max-width: 900px) {
     .nav-links {
@@ -128,5 +114,57 @@
     }
     .nav-actions {
         gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-container {
+        height: 64px;
+        /* Brings the whole nav away from the screen edges */
+        width: 94%; 
+        white-space: nowrap; 
+    }
+    
+    .logo {
+        /* Gives SpendSense text just a tiny bit of space from the logo */
+        gap: 6px !important; 
+    }
+    
+    .logo img {
+        width: 26px !important;
+        height: 26px !important;
+        margin-right: 0 !important; /* Handled by gap now */
+    }
+
+    .logo h4 {
+        font-size: 15px !important; 
+    }
+    
+    .nav-actions {
+        /* Spaces the Theme, Login, and Button comfortably */
+        gap: 10px; 
+    }
+    
+    .theme-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .login-link {
+        font-size: 13px;
+        margin-right: 2px; /* Tiny nudge away from the Get Started button */
+    }
+    
+    .nav-register-link {
+        display: block; 
+    }
+    
+    .nav-register-link button {
+        /* Softens the button so it doesn't look cramped */
+        padding: 6px 12px !important; 
+        font-size: 13px !important;
+        height: auto !important;
+        min-width: unset !important;
+        border-radius: 10px;
     }
 }

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
+// ... (imports remain the same)
+
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
 
@@ -13,16 +15,9 @@ const Navbar = () => {
         
         {/* Logo */}
         <Link to="/" className="logo">
-          SpendSense
+          <img src="logo.png" alt="SpendSense logo" style={{ width: 40, height: 40, marginRight: 5 }} />
+          <h4>SpendSense</h4>
         </Link>
-
-        {/* Navigation */}
-        <nav className="nav-links">
-          <a href="#features">Features</a>
-          <a href="#about">About</a>
-          <a href="#how">How it Works</a>
-          <a href="#pricing">Pricing</a>
-        </nav>
 
         {/* Right Side Actions */}
         <div className="nav-actions">
@@ -38,7 +33,8 @@ const Navbar = () => {
             Login
           </Link>
           
-          <Link to="/register">
+          {/* ADDED CLASS HERE */}
+          <Link to="/register" className="nav-register-link">
             <Button text="Get Started" />
           </Link>
         </div>

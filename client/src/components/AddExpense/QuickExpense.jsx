@@ -47,26 +47,28 @@ const QuickExpense = () => {
 
 
   const handleSave = async () => {
+  try {
+    setSaving(true);
 
-    try {
+    // Make sure 'result' contains the expected keys (e.g., amount, title) before passing
+    const response = await addExpense(result, token);
 
-      setSaving(true);
-
-      await addExpense(result, token);
-
-      toast.success("Expense added successfully.");
-
-      setText("");
-      setResult(null);
-
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response?.data?.message || "Failed to save expense.");
-    } finally {
-      setSaving(false);
+    // Intercept backend budget checks 
+    if (response && response.budgetWarning) {
+      toast.warning(response.warningMessage);
     }
 
-  };
+    toast.success("Expense added successfully.");
+    setText("");
+    setResult(null);
+
+  } catch (err) {
+    console.log(err);
+    toast.error(err.response?.data?.message || "Failed to save expense.");
+  } finally {
+    setSaving(false);
+  }
+};
 
 
   return (

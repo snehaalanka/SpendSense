@@ -57,7 +57,7 @@ const Hero = () => {
           <div className="stat-card">
             <Wallet size={22} />
             <div>
-              <h3>₹12L+</h3>
+              <h3>₹10L</h3>
               <p>Money Managed</p>
             </div>
           </div>
