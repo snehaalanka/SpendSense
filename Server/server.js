@@ -20,11 +20,10 @@ connectDB();
 app.use(cors({
     origin: [
         "http://localhost:5173", 
-        "https://spend-sense-sigma-five.vercel.app/" // <-- Paste it here (no trailing slash at the end)
+        "https://spend-sense-sigma-five.vercel.app" // <-- Your exact new Vercel link
     ],
     credentials: true
 }));
-
 app.use(express.json());   
 
 app.use("/api/auth", authRoutes);

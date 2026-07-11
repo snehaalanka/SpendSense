@@ -12,26 +12,26 @@ const API = axios.create({
   }
 });
 
-export default API;
-// Register User
+// Register User - Added '/auth' prefix to match your backend route structure
 export const registerUser = async (userData) => {
-    const response = await API.post("/register", userData);
+    const response = await API.post("/auth/register", userData);
     return response.data;
 };
 
-// Login User
+// Login User - Added '/auth' prefix to match your backend route structure
 export const loginUser = async (userData) => {
-    const response = await API.post("/login", userData);
+    const response = await API.post("/auth/login", userData);
     return response.data;
 };
 
-// Get Logged In User Profile
+// Get Logged In User Profile - Keep as /auth/profile if nested under auth, or leave as is if it's a base route
 export const getUserProfile = async (token) => {
-    const response = await API.get("/profile", {
+    const response = await API.get("/auth/profile", {
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
-
     return response.data;
 };
+
+export default API;
