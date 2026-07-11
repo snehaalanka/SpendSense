@@ -20,7 +20,7 @@ connectDB();
 app.use(cors({
     origin: [
         "http://localhost:5173", 
-        "https://your-frontend-app.vercel.app" // <-- Replace this with your Vercel URL once deployed
+        "https://spend-sense-sigma-five.vercel.app/" // <-- Paste it here (no trailing slash at the end)
     ],
     credentials: true
 }));
