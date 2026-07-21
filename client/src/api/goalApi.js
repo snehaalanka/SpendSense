@@ -26,7 +26,7 @@ export const createGoal = async (goal, token) => {
 
 export const deleteGoal = async (id, token) => {
   const res = await axios.delete(
-    `http://localhost:5000/api/goals/${id}`,
+    `${API}/${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

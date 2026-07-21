@@ -31,18 +31,13 @@ const ExpenseFilters = ({
   const selectStyles = {
     control: (provided, state) => ({
       ...provided,
-      backgroundColor: theme === "dark" ? "#111827" : "#ffffff",
-      border: `1px solid ${
-        state.isFocused ? "#2563EB" : theme === "dark" ? "#374151" : "#D1D5DB"
-      }`,
+      backgroundColor: "transparent",
+      border: "none",
       borderRadius: "12px",
       minHeight: "50px",
       boxShadow: "none",
       cursor: "pointer",
       transition: ".25s",
-      "&:hover": {
-        borderColor: "#2563EB",
-      },
     }),
     menu: (provided) => ({
       ...provided,

@@ -22,8 +22,8 @@
     display: inline-block;
     padding: 8px 16px;
     background: rgba(37, 99, 235, 0.10);
-    color: #2563EB;
-    border-radius: 999px;
+    color: var(--primary);
+    border-radius: var(--radius-lg);
     font-size: 14px; /* Explicitly set to match Hero tag */
     font-weight: 600;
     margin-bottom: 20px;
@@ -38,7 +38,7 @@
 }
 
 .features h2 span {
-    color: #2563EB;
+    color: var(--primary);
 }
 
 .features-subtitle {

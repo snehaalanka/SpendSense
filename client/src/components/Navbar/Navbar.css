@@ -59,7 +59,7 @@
 }
 
 .nav-links a:hover {
-    color: #2563EB;
+    color: var(--primary);
 }
 
 .nav-actions {
@@ -79,14 +79,14 @@
 }
 
 .login-link:hover {
-    color: #2563EB;
+    color: var(--primary);
 }
 
 .theme-btn {
     width: 40px;
     height: 40px;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     background: var(--card);
     color: var(--text-primary);
     border: 1px solid var(--border);
@@ -99,8 +99,8 @@
 }
 
 .theme-btn:hover {
-    border-color: #2563EB;
-    color: #2563EB;
+    border-color: var(--primary);
+    color: var(--primary);
     transform: translateY(-1px);
 }
 
@@ -165,6 +165,6 @@
         font-size: 13px !important;
         height: auto !important;
         min-width: unset !important;
-        border-radius: 10px;
+        border-radius: var(--radius-lg);
     }
 }

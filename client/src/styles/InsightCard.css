@@ -4,7 +4,7 @@
 
     border:1px solid var(--border);
 
-    border-radius:20px;
+    border-radius: var(--radius-lg);
 
     padding:18px;
 
@@ -36,7 +36,7 @@
 
 .insight-title svg{
 
-    color:#2563EB;
+    color:var(--primary);
 
 }
 
@@ -62,7 +62,7 @@
 
     border:1px solid var(--border);
 
-    border-radius:16px;
+    border-radius: var(--radius-lg);
 
     padding:16px;
 
@@ -72,9 +72,9 @@
 
     width:4px;
 
-    border-radius:20px;
+    border-radius: var(--radius-lg);
 
-    background:#2563EB;
+    background:var(--primary);
 
 }
 
@@ -130,7 +130,7 @@
 
 .insight-row strong{
 
-    color:#2563EB;
+    color:var(--primary);
 
 }
 
@@ -160,7 +160,7 @@
 
     border:1px solid var(--border);
 
-    border-radius:14px;
+    border-radius: var(--radius-lg);
 
     padding:16px 12px;
 
@@ -178,7 +178,7 @@
 
 .mini-icon{
 
-    color:#2563EB;
+    color:var(--primary);
 
     margin-bottom:8px;
 
@@ -214,7 +214,7 @@
 
     border:none;
 
-    border-radius:14px;
+    border-radius: var(--radius-lg);
 
     padding:13px;
 
@@ -228,7 +228,7 @@
 
     background:linear-gradient(
         90deg,
-        #2563EB,
+        var(--primary),
         #3B82F6
     );
 

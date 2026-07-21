@@ -1,11 +1,9 @@
-.layout{
-
-    display:flex;
-
-    min-height:100vh;
-
-    background:var(--background);
-
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--background);
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 /* ===========================
@@ -48,7 +46,7 @@
 
     flex:1;
 
-    padding:20px 28px 28px;
+    padding:32px 40px 28px;
 
     max-width:1600px;
 
@@ -70,7 +68,7 @@
 
     background:#CBD5E1;
 
-    border-radius:20px;
+    border-radius: var(--radius-lg);
 
 }
 

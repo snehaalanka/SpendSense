@@ -9,12 +9,7 @@
     flex-direction: column;
     gap: 20px; 
     width: 100%;
-    min-height: 100vh;
-    
-    /* Adds the exact same spacing used on your Expense pages */
-    padding: 24px; 
     box-sizing: border-box; 
-    
     animation: fadeIn .35s ease;
 }
 
@@ -60,8 +55,10 @@
 ========================== */
 .dashboard-card {
     background: var(--card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     transition: .25s;
 }

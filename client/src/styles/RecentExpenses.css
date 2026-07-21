@@ -4,7 +4,7 @@
 
     border:1px solid var(--border);
 
-    border-radius:20px;
+    border-radius: var(--radius-lg);
 
     padding:24px;
 
@@ -46,7 +46,7 @@
 
     background:none;
 
-    color:#2563EB;
+    color:var(--primary);
 
     font-size:15px;
 
@@ -100,11 +100,11 @@
 
     height:44px;
 
-    border-radius:12px;
+    border-radius: var(--radius-lg);
 
     background:#F3F6FF;
 
-    color:#2563EB;
+    color:var(--primary);
 
     display:flex;
 

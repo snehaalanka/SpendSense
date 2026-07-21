@@ -14,7 +14,7 @@
 
     padding:30px;
 
-    background:var(--background);
+    background:transparent;
 
     transition:.3s;
 
@@ -26,13 +26,17 @@
 
 .register-card{
 
-    width:460px;
+    width:480px; /* Slightly wider for the extra inputs */
 
     background:var(--card);
 
+    backdrop-filter: var(--glass-blur);
+
+    -webkit-backdrop-filter: var(--glass-blur);
+
     border:1px solid var(--border);
 
-    border-radius:22px;
+    border-radius: var(--radius-lg);
 
     padding:42px;
 
@@ -78,7 +82,7 @@
 .register-card .logo h2 {
     font-size: 32px; 
     font-weight: 700;
-    color: #2563EB;
+    color: var(--primary);
     letter-spacing: -0.5px;
     margin: 0;
     text-align: center;
@@ -150,7 +154,7 @@
 
     border:1px solid var(--border);
 
-    border-radius:12px;
+    border-radius: var(--radius-lg);
 
     background:var(--background);
 
@@ -172,7 +176,7 @@
 
     outline:none;
 
-    border-color:#2563EB;
+    border-color:var(--primary);
 
     box-shadow:0 0 0 4px rgba(37,99,235,.10);
 
@@ -225,7 +229,7 @@
 
 .password-toggle:hover{
 
-    color:#2563EB;
+    color:var(--primary);
 
 }
 
@@ -243,9 +247,9 @@
 
     border:none;
 
-    border-radius:12px;
+    border-radius: var(--radius-lg);
 
-    background:#2563EB;
+    background:var(--primary);
 
     color:white;
 
@@ -261,7 +265,7 @@
 
 .register-btn:hover{
 
-    background:#1D4ED8;
+    background:var(--primary-hover);
 
     transform:translateY(-2px);
 
@@ -305,7 +309,7 @@
 
 .login-text span{
 
-    color:#2563EB;
+    color:var(--primary);
 
     font-weight:600;
 
@@ -315,7 +319,7 @@
 
 .login-text span:hover{
 
-    color:#1D4ED8;
+    color:var(--primary-hover);
 
 }
 
@@ -337,7 +341,7 @@ width:100%;
 
 padding:28px 22px;
 
-border-radius:18px;
+border-radius: var(--radius-lg);
 
 }
 

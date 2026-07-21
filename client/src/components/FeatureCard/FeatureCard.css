@@ -1,7 +1,9 @@
 .feature-card {
     background: var(--card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border);
-    border-radius: 22px;
+    border-radius: var(--radius-lg);
     padding: 24px; /* Reduced from 32px to tighten the box */
     box-shadow: var(--shadow);
     transition: 0.35s;
@@ -12,15 +14,15 @@
 
 .feature-card:hover {
     transform: translateY(-8px); /* Slightly smoother hover jump */
-    border-color: #2563EB;
+    border-color: var(--primary);
 }
 
 .feature-icon {
     width: 56px; /* Reduced from 72px for better proportions */
     height: 56px; 
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     background: rgba(37, 99, 235, 0.10);
-    color: #2563EB;
+    color: var(--primary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,7 +56,7 @@
     gap: 8px;
     border: none;
     background: none;
-    color: #2563EB;
+    color: var(--primary);
     font-weight: 600;
     font-size: 15px;
     cursor: pointer;

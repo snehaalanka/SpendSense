@@ -81,7 +81,7 @@ ul{
 
     background:#cbd5e1;
 
-    border-radius:20px;
+    border-radius: var(--radius-lg);
 
 }
 
@@ -89,4 +89,71 @@ ul{
 
     background:#94a3b8;
 
+}
+
+/* =====================================================
+   SHINY & AESTHETIC GLOBAL STYLES
+===================================================== */
+
+/* Make all main headers pop with a subtle gradient text */
+h1, .login-header h2, .register-header h2, .expense-header h1, .sidebar-logo h2 {
+    background: linear-gradient(to right, var(--text-primary), #60A5FA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Shiny gradient buttons for main actions */
+.login-btn, .register-btn, button[type="submit"], .btn-primary {
+    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%) !important;
+    border: none !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-btn::after, .register-btn::after, button[type="submit"]::after, .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+}
+
+.login-btn:hover, .register-btn:hover, button[type="submit"]:hover, .btn-primary:hover {
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6) !important;
+    transform: translateY(-2px);
+}
+
+/* Make inputs look glossy */
+input, textarea, select {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Glassmorphism on layout containers */
+.login-card, .register-card, .expense-layout, .settings-card, .profile-card, .goal-card {
+    background: var(--card) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }

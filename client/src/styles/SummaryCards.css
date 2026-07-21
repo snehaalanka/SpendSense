@@ -1,35 +1,25 @@
 .summary-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px; /* Standardized from 18px to 20px to match the rest of the dashboard */
+    gap: 20px;
 }
 
 .summary-card {
     background: var(--card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 18px;
+    border-radius: var(--radius-lg);
+    padding: 24px;
     display: flex;
     align-items: center;
-    gap: 16px;
     box-shadow: var(--shadow);
     transition: .25s;
 }
 
 .summary-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-hover);
-}
-
-.summary-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    flex-shrink: 0;
 }
 
 .summary-info {
@@ -38,22 +28,16 @@
 }
 
 .summary-info p {
-    font-size: 13px;
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .summary-info h2 {
-    font-size: 24px;
+    font-size: 1.8rem;
     color: var(--text-primary);
     font-weight: 700;
-}
-
-.summary-info span {
-    margin-top: 6px;
-    font-size: 13px;
-    color: #10B981;
-    font-weight: 600;
 }
 
 @media(max-width: 1400px){

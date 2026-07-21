@@ -14,7 +14,7 @@
 
     padding:30px;
 
-    background:var(--background);
+    background:transparent;
 
     transition:.3s;
 
@@ -30,9 +30,13 @@
 
     background:var(--card);
 
+    backdrop-filter: var(--glass-blur);
+
+    -webkit-backdrop-filter: var(--glass-blur);
+
     border:1px solid var(--border);
 
-    border-radius:22px;
+    border-radius: var(--radius-lg);
 
     padding:42px;
 
@@ -74,7 +78,7 @@
 .login-card .logo h2 {
     font-size: 32px; 
     font-weight: 700;
-    color: #2563EB;
+    color: var(--primary);
     letter-spacing: -0.5px;
     margin: 0;
     text-align: center;
@@ -144,7 +148,7 @@
 
     padding:0 16px;
 
-    border-radius:12px;
+    border-radius: var(--radius-lg);
 
     border:1px solid var(--border);
 
@@ -168,7 +172,7 @@
 
     outline:none;
 
-    border-color:#2563EB;
+    border-color:var(--primary);
 
     box-shadow:0 0 0 4px rgba(37,99,235,.10);
 
@@ -193,7 +197,7 @@
 
     text-decoration:none;
 
-    color:#2563EB;
+    color:var(--primary);
 
     font-size:14px;
 
@@ -205,7 +209,7 @@
 
 .password-header a:hover{
 
-    color:#1D4ED8;
+    color:var(--primary-hover);
 
 }
 
@@ -257,7 +261,7 @@
 
 .password-toggle:hover{
 
-    color:#2563EB;
+    color:var(--primary);
 
 }
 
@@ -275,9 +279,9 @@
 
     border:none;
 
-    border-radius:12px;
+    border-radius: var(--radius-lg);
 
-    background:#2563EB;
+    background:var(--primary);
 
     color:white;
 
@@ -293,7 +297,7 @@
 
 .login-btn:hover{
 
-    background:#1D4ED8;
+    background:var(--primary-hover);
 
     transform:translateY(-2px);
 
@@ -329,7 +333,7 @@
 
 .signup-text span{
 
-    color:#2563EB;
+    color:var(--primary);
 
     font-weight:600;
 
@@ -339,7 +343,7 @@
 
 .signup-text span:hover{
 
-    color:#1D4ED8;
+    color:var(--primary-hover);
 
 }
 
@@ -361,7 +365,7 @@ width:100%;
 
 padding:28px 22px;
 
-border-radius:18px;
+border-radius: var(--radius-lg);
 
 }
 

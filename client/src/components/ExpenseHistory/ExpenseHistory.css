@@ -2,8 +2,7 @@
    PAGE
 ====================================================== */
 
-.history-page {
-    padding: 29px;
+.history-page { padding: 0;
 }
 
 .history-header {
@@ -35,7 +34,7 @@
     padding: 20px;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     margin-bottom: 26px;
     align-items: center;
@@ -51,18 +50,18 @@
     gap: 12px;
     height: 52px;
     padding: 0 18px;
-    background: var(--background);
+    background: transparent;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     transition: .25s;
 }
 
 .filter-input:hover {
-    border-color: #2563EB;
+    border-color: var(--primary);
 }
 
 .filter-input svg {
-    color: #2563EB;
+    color: var(--primary);
     flex-shrink: 0;
 }
 
@@ -79,6 +78,12 @@
     color: var(--text-secondary);
 }
 
+.filter-input input:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
 /* ======================================================
    CATEGORY
 ====================================================== */
@@ -89,18 +94,18 @@
     gap: 12px;
     height: 52px;
     padding: 0 16px;
-    background: var(--background);
+    background: transparent;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     transition: .25s;
 }
 
 .filter-select:hover {
-    border-color: #2563EB;
+    border-color: var(--primary);
 }
 
 .filter-select svg {
-    color: #2563EB;
+    color: var(--primary);
     flex-shrink: 0;
 }
 
@@ -131,7 +136,7 @@
 }
 
 .filter-select .css-1xc3v61-indicatorContainer {
-    color: #2563EB;
+    color: var(--primary);
 }
 
 /* ======================================================
@@ -144,18 +149,18 @@
     gap: 12px;
     height: 52px;
     padding: 0 16px;
-    background: var(--background);
+    background: transparent;
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     transition: .25s;
 }
 
 .filter-date:hover {
-    border-color: #2563EB;
+    border-color: var(--primary);
 }
 
 .filter-date svg {
-    color: #2563EB;
+    color: var(--primary);
     flex-shrink: 0;
 }
 
@@ -171,6 +176,12 @@
 
 .filter-date input::placeholder {
     color: var(--text-secondary);
+}
+
+.filter-date input:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 /* ======================================================
@@ -193,8 +204,8 @@
 .total-records {
     padding: 8px 16px;
     background: rgba(37, 99, 235, .12);
-    color: #2563EB;
-    border-radius: 999px;
+    color: var(--primary);
+    border-radius: var(--radius-lg);
     font-size: 13px;
     font-weight: 600;
 }
@@ -206,7 +217,7 @@
 .table-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 22px;
+    border-radius: var(--radius-lg);
     padding: 22px;
     box-shadow: var(--shadow);
     overflow: hidden;
@@ -269,7 +280,7 @@ td {
     justify-content: center;
     gap: 6px;
     padding: 6px 12px;
-    border-radius: 999px;
+    border-radius: var(--radius-lg);
     font-size: 12px;
     font-weight: 600;
 }
@@ -316,7 +327,7 @@ td {
     width: 36px;
     height: 36px;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -324,8 +335,8 @@ td {
     transition: .25s;
 }
 
-.edit-btn { background: rgba(37, 99, 235, .12); color: #2563EB; }
-.edit-btn:hover { background: #2563EB; color: white; transform: translateY(-2px); }
+.edit-btn { background: rgba(37, 99, 235, .12); color: var(--primary); }
+.edit-btn:hover { background: var(--primary); color: white; transform: translateY(-2px); }
 
 .delete-btn { background: rgba(239, 68, 68, .12); color: #EF4444; }
 .delete-btn:hover { background: #EF4444; color: white; transform: translateY(-2px); }
@@ -337,7 +348,7 @@ td {
 .react-datepicker {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
 }
@@ -356,13 +367,13 @@ td {
 .react-datepicker__day { color: var(--text-primary); }
 
 .react-datepicker__day:hover {
-    background: #2563EB;
+    background: var(--primary);
     color: white;
     border-radius: 50%;
 }
 
 .react-datepicker__day--selected {
-    background: #2563EB !important;
+    background: var(--primary) !important;
     color: white;
 }
 
@@ -375,7 +386,7 @@ td {
 ====================================================== */
 
 .table-card::-webkit-scrollbar { height: 8px; }
-.table-card::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 20px; }
+.table-card::-webkit-scrollbar-thumb { background: var(--primary); border-radius: var(--radius-lg); }
 
 /* ======================================================
    RESPONSIVE
@@ -388,8 +399,7 @@ td {
 }
 
 @media(max-width: 768px) {
-    .history-page {
-        padding: 18px;
+    .history-page { padding: 0;
     }
     .history-header h1 {
         font-size: 28px;
@@ -438,7 +448,7 @@ td {
 .delete-modal {
     width: 420px;
     background: #fff;
-    border-radius: 22px;
+    border-radius: var(--radius-lg);
     padding: 32px;
     text-align: center;
     box-shadow: 0 25px 60px rgba(15, 23, 42, .25);
@@ -482,7 +492,7 @@ td {
 .cancel-modal-btn {
     padding: 12px 28px;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     background: #e2e8f0;
     color: #334155;
     cursor: pointer;
@@ -494,7 +504,7 @@ td {
 .delete-modal-btn {
     padding: 12px 28px;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     background: #ef4444;
     color: white;
     cursor: pointer;
@@ -510,7 +520,7 @@ td {
 .edit-modal {
   width: 520px;
   background: #ffffff;
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   padding: 30px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
   animation: popup 0.25s ease;
@@ -535,7 +545,7 @@ td {
   width: 100%;
   padding: 13px 15px;
   border: 1px solid #d1d5db;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   font-size: 15px;
   outline: none;
   transition: 0.25s;
@@ -545,23 +555,23 @@ td {
 .edit-form input:focus,
 .edit-form select:focus,
 .edit-form textarea:focus {
-  border-color: #2563eb;
+  border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .edit-form textarea { resize: none; min-height: 90px; }
 
 .save-modal-btn {
-  background: #2563eb;
+  background: var(--primary);
   color: white;
   border: none;
   padding: 11px 22px;
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
   font-weight: 600;
   transition: 0.25s;
 }
-.save-modal-btn:hover { background: #1d4ed8; }
+.save-modal-btn:hover { background: var(--primary-hover); }
 
 @keyframes popup {
     from { transform: scale(.85); opacity: 0; }

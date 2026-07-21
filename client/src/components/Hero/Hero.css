@@ -25,9 +25,9 @@
     align-items: center;
     gap: 8px;
     background: rgba(37, 99, 235, 0.10);
-    color: #2563EB;
+    color: var(--primary);
     padding: 10px 16px;
-    border-radius: 999px;
+    border-radius: var(--radius-lg);
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 24px;
@@ -42,7 +42,7 @@
 }
 
 .highlight {
-    color: #2563EB;
+    color: var(--primary);
 }
 
 .hero-description {
@@ -71,8 +71,10 @@
 
 .stat-card {
     background: var(--card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: var(--radius-lg);
     padding: 18px 20px;
     display: flex;
     align-items: center;
@@ -84,11 +86,11 @@
 
 .stat-card:hover {
     transform: translateY(-5px);
-    border-color: #2563EB;
+    border-color: var(--primary);
 }
 
 .stat-card svg {
-    color: #2563EB;
+    color: var(--primary);
 }
 
 .stat-card h3 {
@@ -119,7 +121,7 @@
 
 .hero-image-card {
     position: relative;
-    width: 580px; 
+    width: 520px; 
     /* Removed padding, background, border, and shadows */
     transition: 0.35s;
     display: flex;

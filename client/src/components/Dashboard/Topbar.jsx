@@ -1,35 +1,18 @@
 import "../../styles/Topbar.css";
 import MonthSelector from "./MonthSelector";
 import { useEffect, useState } from "react";
-import { Moon, Sun, Sparkles, Menu } from "lucide-react";
+import { Moon, Sun, Menu } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../context/AuthContext";
-import { getDashboardInsight } from "../../api/aiApi";
 
 const Topbar = () => {
-  const [insight, setInsight] = useState(null);
   const { user } = useAuth();
-
-  useEffect(() => {
-    fetchInsight();
-  }, []);
-
-  const fetchInsight = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const data = await getDashboardInsight(token);
-      setInsight(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const { theme, toggleTheme } = useTheme();
   const hour = new Date().getHours();
-  let greeting = "Good Evening";
+  let greeting = "GOOD EVENING";
 
-  if (hour < 12) greeting = "Good Morning";
-  else if (hour < 18) greeting = "Good Afternoon";
+  if (hour < 12) greeting = "GOOD MORNING";
+  else if (hour < 18) greeting = "GOOD AFTERNOON";
 
   const handleOpenMobileMenu = () => {
     window.dispatchEvent(new CustomEvent("toggle-mobile-menu"));
@@ -42,31 +25,11 @@ const Topbar = () => {
           <Menu size={24} />
         </button>
 
-        <h1>
-          {greeting},
-          <span>{user?.name?.split(" ")[0]}</span>
-        </h1>
-        <div className="ai-tip">
-          <Sparkles size={16} />
-          {insight ? (
-            <p>
-              {insight.isOverBudgetPace ? (
-                <>
-                  AI predicts you'll exceed your budget by
-                  <strong> ₹{insight.predictedSavings} </strong>
-                  this month.
-                </>
-              ) : (
-                <>
-                  AI predicts you'll save
-                  <strong> ₹{insight.predictedSavings} </strong>
-                  this month.
-                </>
-              )}
-            </p>
-          ) : (
-            <p>Loading your AI prediction...</p>
-          )}
+        <div className="greeting-container">
+          <span className="greeting-text">{greeting}</span>
+          <h1>
+            <span className="greeting-name">{user?.name?.split(" ")[0]}</span>, here's your money today
+          </h1>
         </div>
       </div>
 

@@ -469,17 +469,12 @@ const ManualExpense = () => {
             }
 
             onChange={(date)=>{
-
               setExpense({
-
                 ...expense,
-
                 date:date
-                  ? date.toISOString().split("T")[0]
+                  ? `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
                   : "",
-
               });
-
             }}
 
             placeholderText="Select Date"
